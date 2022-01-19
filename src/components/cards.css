@@ -18,8 +18,10 @@
 .name,
 .info {
   align-items: center;
+  color: black;
   display: flex;
   flex-direction: column;
+  font-weight: bold;
   height: 20vh;
   justify-content: center;
 }

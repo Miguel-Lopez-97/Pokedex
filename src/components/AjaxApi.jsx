@@ -31,9 +31,9 @@ function PokemonIndividual(props) {
   const backgroundColorMix =
     "linear-gradient(135deg," +
     backgroundColor1 +
-    " 10%, " +
+    " 25%, " +
     backgroundColor2 +
-    " 100%)";
+    " 75%)";
   return (
     <>
       <div className="card" style={{ background: backgroundColorMix }}>
