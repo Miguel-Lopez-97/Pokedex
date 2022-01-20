@@ -1,11 +1,20 @@
+import React, { Component } from "react";
 import "./App.css";
 import AjaxApi from "./components/AjaxApi";
+import Header from "./components/header";
+import NavBar from "./components/navegation";
 
 
 function App() {
   return (
     <>
-    <h1>Pokedex</h1>
+
+    <Header> 
+    </Header>
+
+    <NavBar>
+    </NavBar>
+
     <div className="App">
       <AjaxApi>
       </AjaxApi>

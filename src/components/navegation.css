@@ -1,0 +1,16 @@
+ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+li {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+a{
+  color: black;
+  display: flex;
+  font-size: larger;
+  font-weight: bold;
+  text-decoration: none;
+}
