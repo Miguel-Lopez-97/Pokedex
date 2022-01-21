@@ -2,23 +2,17 @@ import React, { Component } from "react";
 import "./App.css";
 import AjaxApi from "./components/AjaxApi";
 import Header from "./components/header";
-import NavBar from "./components/navegation";
-
+import BarNav from  "./components/navegation"
 
 function App() {
   return (
     <>
-
-    <Header> 
-    </Header>
-
-    <NavBar>
-    </NavBar>
-
-    <div className="App">
-      <AjaxApi>
-      </AjaxApi>
-    </div>
+      <Header></Header>
+      <BarNav></BarNav>
+      <div className="App">
+        <AjaxApi>
+        </AjaxApi>
+      </div>
     </>
   );
 }

@@ -1,3 +1,15 @@
+.navBar{
+  display: inline;
+  width: 100vh;
+}
+
+.container{
+  background-color: black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 ul {
   display: flex;
   justify-content: space-evenly;
@@ -7,7 +19,7 @@ li {
   justify-content: center;
   list-style: none;
 }
-a{
+a, button{
   color: black;
   display: flex;
   font-size: larger;
