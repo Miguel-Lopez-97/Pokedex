@@ -1,19 +1,20 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
 import "./navegation.css";
 
 function NavBar() {
+  
   return (
     <>
       <ul>
         <li>
-          <Link to="/first_gen">First Gen</Link>
+          <NavLink to="/first_gen">First Gen</NavLink>
         </li>
         <li>
           <Link to="/second_gen">Second Gen</Link>
         </li>
         <li>
-          <Link to="/third_gen">Third Gen</Link>
+          <NavLink to="/third_gen">Third Gen</NavLink>
         </li>
         <li>
           <Link to="/fourth_gen">Fourth Gen</Link>

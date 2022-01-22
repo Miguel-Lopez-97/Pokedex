@@ -65,12 +65,12 @@ import "./navegation.css";
   }
 } */
 
-function AjaxApi() {
+function AjaxApi({urlApi}) {
   const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
     const getApi = async () => {
-      const url = "https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0";
+      let url = urlApi;
       fetch(url)
         .then((res) => res.json())
         .then((json) => {
