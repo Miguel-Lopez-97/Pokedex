@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {  useEffect, useState } from "react";
 import PokemonIndividual from "./card";
 import "./navegation.css";
 
@@ -71,7 +70,7 @@ function AjaxApi() {
 
   useEffect(() => {
     const getApi = async () => {
-      const url = "https://pokeapi.co/api/v2/pokemon/?limit=10&offset=0";
+      const url = "https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0";
       fetch(url)
         .then((res) => res.json())
         .then((json) => {
@@ -95,13 +94,11 @@ function AjaxApi() {
                         json.types[1].type.name.slice(1)
                       : "null",
                 };
-                setPokemon(
-                  [...pokemon, pokemonNew].sort((a, b) => {
+                setPokemon(prev=>
+                  [...prev.sort((a, b) => {
                     return a.dex - b.dex;
-                  })
+                  }), pokemonNew]
                 );
-                console.log(pokemonNew);
-                console.log(pokemon)
               });
           });
         });
@@ -111,6 +108,7 @@ function AjaxApi() {
 
   return (
     <>
+    <div className="container">
       {pokemon.map((el) => (
         <PokemonIndividual
           key={el.id}
@@ -122,6 +120,7 @@ function AjaxApi() {
           type1={el.type1}
         />
       ))}
+      </div>
     </>
   );
 }
