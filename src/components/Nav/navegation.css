@@ -13,6 +13,7 @@
 ul {
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 2vh;
 }
 li {
   display: flex;
