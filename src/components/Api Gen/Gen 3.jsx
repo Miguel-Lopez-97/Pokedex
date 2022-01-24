@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from "react";
-import PokemonIndividual from "./card";
-import "./navegation.css";
+import PokemonIndividual from "../Card/card";
+import "../Nav/navegation.css";
 
 /* export default class AjaxApi extends Component {
   state = {
@@ -65,7 +65,7 @@ import "./navegation.css";
   }
 } */
 
-function AjaxApi({urlApi}) {
+function ApiGen3({urlApi}) {
   const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
@@ -126,4 +126,4 @@ function AjaxApi({urlApi}) {
     </>
   );
 }
-export default AjaxApi;
+export default ApiGen3;

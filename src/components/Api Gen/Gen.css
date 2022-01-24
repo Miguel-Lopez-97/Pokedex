@@ -1,0 +1,13 @@
+.containerBanner{
+    display: flex;
+    background-color: black;
+    width: 100vw;
+    height: 75vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerBanner img{
+    max-height: 70vh;
+    width: auto;
+}
