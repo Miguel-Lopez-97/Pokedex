@@ -79,6 +79,7 @@ function AjaxApi({urlApi}) {
             fetch(el.url)
               .then((res) => res.json())
               .then((json) => {
+                console.log(json)
                 let pokemonNew = {
                   id: json.id,
                   dex: json.id,
@@ -98,7 +99,8 @@ function AjaxApi({urlApi}) {
                   [...prev.sort((a, b) => {
                     return a.dex - b.dex;
                   }), pokemonNew]
-                );
+                )
+                console.log(pokemonNew);
               });
           });
         });

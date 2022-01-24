@@ -58,3 +58,4 @@ function PokemonIndividual(props) {
   );
 }
 export default PokemonIndividual;
+

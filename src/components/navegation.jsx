@@ -7,14 +7,17 @@ function NavBar() {
   return (
     <>
       <ul>
+      <li>
+          <Link to="/">Home</Link>
+        </li>
         <li>
-          <NavLink to="/first_gen">First Gen</NavLink>
+          <Link to="/first_gen">First Gen</Link>
         </li>
         <li>
           <Link to="/second_gen">Second Gen</Link>
         </li>
         <li>
-          <NavLink to="/third_gen">Third Gen</NavLink>
+          <Link to="/third_gen">Third Gen</Link>
         </li>
         <li>
           <Link to="/fourth_gen">Fourth Gen</Link>
