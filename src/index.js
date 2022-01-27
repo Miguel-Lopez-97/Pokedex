@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
 import {ApiGen} from "./components/Api_Gen/Gen"
-import {AjaxApi} from "./components/Api_Gen/AjaxApi"
+import {Home} from "./components/Api_Gen/Home"
 import {Header} from "./components/header/header";
 import {ApiType} from "./components/Api_Type/Type";
 import reportWebVitals from './reportWebVitals';
@@ -27,7 +27,7 @@ render(
   <BrowserRouter>
   <Routes>
       <Route path='/' element={<Header />}>
-          <Route path="/" element={<AjaxApi/>} />
+          <Route path="/" element={<Home/>} />
           <Route path="/first_gen" element={<ApiGen urlApi={url[0]} />} />
           <Route path="/second_gen" element={<ApiGen urlApi={url[1]} />} />
           <Route path="/third_gen" element={<ApiGen urlApi={url[2]} />} />

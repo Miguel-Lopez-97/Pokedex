@@ -1,7 +1,7 @@
 import React from "react";
 import "../header/Nav/navigation.css";
 
-export function AjaxApi() {
+export function Home() {
   
     return (
       <div className="containerBanner">
