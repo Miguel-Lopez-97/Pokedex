@@ -1,8 +1,8 @@
 import React from "react";
 import "./header.css";
 import { Outlet } from "react-router";
-import NavBar from "./Nav/navegation";
-import NavTypes from "./Nav/navegation types";
+import NavBar from "./Nav/navigation";
+import NavTypes from "./Nav/navigation types";
 
 function Header() {
     return (

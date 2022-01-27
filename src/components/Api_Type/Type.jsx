@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from "react";
 import PokemonIndividual from "../Card/card";
-import "../header/Nav/navegation.css";
+import "../header/Nav/navigation.css";
 
 
 function ApiType(props) {

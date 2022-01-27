@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./navegation.css";
+import "./navigation.css";
 
 function NavTypes() {
   
