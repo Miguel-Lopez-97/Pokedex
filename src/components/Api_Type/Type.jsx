@@ -55,7 +55,7 @@ export function ApiType(props) {
   useEffect(() => {
     pokemon.splice(0);
     getApi(urlApi);
-  }, [urlApi, pokemon]);
+  }, [urlApi]);
 
   return (
     <>
