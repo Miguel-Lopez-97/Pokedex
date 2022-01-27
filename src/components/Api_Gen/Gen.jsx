@@ -53,7 +53,7 @@ export function ApiGen(props) {
   useEffect(() => {
     pokemon.splice(0);
     getApi(urlApi);
-  }, [urlApi]);
+  }, [urlApi, pokemon]);
 
   return (
     <>
