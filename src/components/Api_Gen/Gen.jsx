@@ -8,7 +8,7 @@ export function ApiGen(props) {
 
   const getApi = async (url) => {
     
-    fetch(url)
+    fetch(url).then(setPokemon([]))
       .then((res) => res.json())
       .then((json) => {
         json.results.forEach((el) => {
@@ -51,7 +51,6 @@ export function ApiGen(props) {
   };
 
   useEffect(() => {
-    pokemon.splice(0);
     getApi(urlApi);
   }, [urlApi]);
 

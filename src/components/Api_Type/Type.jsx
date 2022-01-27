@@ -8,7 +8,7 @@ export function ApiType(props) {
   const {urlApi}=props;
 
   const getApi = async (url) => {
-      fetch(url)
+      fetch(url).then(setPokemon([]))
       .then((res) => res.json())
       .then((json) => {
         json.pokemon.forEach((el) => {
@@ -53,7 +53,6 @@ export function ApiType(props) {
 
 
   useEffect(() => {
-    pokemon.splice(0);
     getApi(urlApi);
   }, [urlApi]);
 
