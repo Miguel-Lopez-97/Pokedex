@@ -25,12 +25,12 @@ export function ApiType(props) {
                   json.types[0].type.name[0].toUpperCase() +
                   json.types[0].type.name.slice(1),
                 type2:
-                  json.types.length == 2
+                  json.types.length === 2
                     ? json.types[1].type.name[0].toUpperCase() +
                       json.types[1].type.name.slice(1)
                     : "null",
                     ability1: json.abilities[0].ability.name,
-                    ability2:json.abilities.length == 2
+                    ability2:json.abilities.length === 2
                       ?json.abilities[1].ability.name
                       :"null",
                     hp: json.stats[0].base_stat,

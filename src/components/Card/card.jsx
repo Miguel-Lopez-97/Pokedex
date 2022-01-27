@@ -28,7 +28,7 @@ export function PokemonIndividual(props) {
   const {name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed}=props
   const backgroundColor1 = colors[type1];
   const backgroundColor2 =
-    type2 == "null" ? colors[type1] : colors[type2];
+    type2 === "null" ? colors[type1] : colors[type2];
   const backgroundColorMix =
     "linear-gradient(135deg," +
     backgroundColor1 +
@@ -50,11 +50,11 @@ export function PokemonIndividual(props) {
           <h3>Normal Sprit - Shiny Sprit</h3>
           <p>
             {type1}
-            {type2 == "null" ? "" : " - " + type2}
+            {type2 === "null" ? "" : " - " + type2}
           </p>
           <p>
             {ability1[0].toUpperCase()+ability1.slice(1)}
-            {ability2 == "null" ? "" : " / " + ability2[0].toUpperCase()+ability2.slice(1)}
+            {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase()+ability2.slice(1)}
           </p>
           <div className="stats">
           <p className="statsP">
