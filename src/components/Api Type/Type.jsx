@@ -3,48 +3,46 @@ import PokemonIndividual from "../Card/card";
 import "../header/Nav/navegation.css";
 
 
-function ApiType({urlApi}) {
+function ApiType(props) {
   const [pokemon, setPokemon] = useState([]);
+  const {urlApi}=props;
+
+  const getApi = async (url) => {
+      fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        json.pokemon.forEach((el) => {
+          fetch(el.pokemon.url)
+            .then((res) => res.json())
+            .then((json) => {
+              let pokemonNew = {
+                id: json.id,
+                dex: json.id,
+                name: json.name[0].toUpperCase() + json.name.slice(1),
+                avatarNormal: json.sprites.front_default,
+                avatarShiny: json.sprites.front_shiny,
+                type1:
+                  json.types[0].type.name[0].toUpperCase() +
+                  json.types[0].type.name.slice(1),
+                type2:
+                  json.types.length == 2
+                    ? json.types[1].type.name[0].toUpperCase() +
+                      json.types[1].type.name.slice(1)
+                    : "null",
+              };
+              setPokemon(prev=>
+                [...prev.sort((a, b) => {
+                  return a.dex - b.dex;
+                }), pokemonNew]
+              )
+            });
+        });
+      });
+  };
 
   useEffect(() => {
-    const getApi = async () => {
-      let url = urlApi;
-      fetch(url)
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          json.pokemon.forEach((el) => {
-            fetch(el.pokemon.url)
-              .then((res) => res.json())
-              .then((json) => {
-                console.log(json)
-                let pokemonNew = {
-                  id: json.id,
-                  dex: json.id,
-                  name: json.name[0].toUpperCase() + json.name.slice(1),
-                  avatarNormal: json.sprites.front_default,
-                  avatarShiny: json.sprites.front_shiny,
-                  type1:
-                    json.types[0].type.name[0].toUpperCase() +
-                    json.types[0].type.name.slice(1),
-                  type2:
-                    json.types.length == 2
-                      ? json.types[1].type.name[0].toUpperCase() +
-                        json.types[1].type.name.slice(1)
-                      : "null",
-                };
-                setPokemon(prev=>
-                  [...prev.sort((a, b) => {
-                    return a.dex - b.dex;
-                  }), pokemonNew]
-                )
-                console.log(pokemonNew);
-              });
-          });
-        });
-    };
-    getApi();
-  }, []);
+    getApi(urlApi);
+  }, [urlApi]);
 
   return (
     <>
