@@ -2,7 +2,7 @@ import React from "react";
 import "./header.css";
 import { Outlet } from "react-router";
 import {NavBar} from "./Nav/navigation";
-import {NavTypes} from "./Nav/navigation types";
+import {NavTypes} from "./Nav/navigation_types";
 
 export function Header() {
     return (
