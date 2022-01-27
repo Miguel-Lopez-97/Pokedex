@@ -1,9 +1,9 @@
 import React, {  useEffect, useState } from "react";
 import PokemonIndividual from "../Card/card";
-import "../Nav/navegation.css";
+import "../header/Nav/navegation.css";
 
 
-function ApiType13({urlApi}) {
+function ApiType({urlApi}) {
   const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
@@ -64,4 +64,4 @@ function ApiType13({urlApi}) {
     </>
   );
 }
-export default ApiType13;
+export default ApiType;
