@@ -1,10 +1,10 @@
 import React from "react";
 import "./header.css";
 import { Outlet } from "react-router";
-import NavBar from "./Nav/navigation";
-import NavTypes from "./Nav/navigation types";
+import {NavBar} from "./Nav/navigation";
+import {NavTypes} from "./Nav/navigation types";
 
-function Header() {
+export function Header() {
     return (
       <div className="banner">
         <header>
@@ -18,5 +18,4 @@ function Header() {
       </div>
     );
   }
-  
-  export default Header;
+;

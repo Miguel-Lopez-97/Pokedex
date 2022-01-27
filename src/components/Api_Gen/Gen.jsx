@@ -1,8 +1,8 @@
 import React, {  useEffect, useState } from "react";
-import PokemonIndividual from "../Card/card";
+import {PokemonIndividual} from "../Card/card";
 import "../header/Nav/navigation.css";
 
-function ApiGen(props) {
+export function ApiGen(props) {
   const [pokemon, setPokemon] = useState([]);
   const {urlApi}=props;
 
@@ -80,8 +80,7 @@ function ApiGen(props) {
       </div>
     </>
   );
-}
-export default ApiGen;
+};
 
 export function AjaxApi() {
   

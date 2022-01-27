@@ -24,7 +24,7 @@ const colors = {
   Shadow: "#8673a1",
 };
 
-function PokemonIndividual(props) {
+export function PokemonIndividual(props) {
   const {name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed}=props
   const backgroundColor1 = colors[type1];
   const backgroundColor2 =
@@ -70,6 +70,5 @@ function PokemonIndividual(props) {
       </div>
     </>
   );
-}
-export default PokemonIndividual;
+};
 

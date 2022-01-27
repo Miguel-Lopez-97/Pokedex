@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
-import ApiGen, {AjaxApi} from "./components/Api_Gen/Gen"
-import Header from "./components/header/header";
-import ApiType from "./components/Api_Type/Type";
+import {ApiGen, AjaxApi} from "./components/Api_Gen/Gen"
+import {Header} from "./components/header/header";
+import {ApiType} from "./components/Api_Type/Type";
 import reportWebVitals from './reportWebVitals';
 
 const rootElement = document.getElementById("root");
