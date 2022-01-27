@@ -17,7 +17,15 @@
   padding: 1vw;
 }
 .card:hover{
-  box-shadow: 0 0 20px #4f9;}
+  box-shadow: 0 0 20px #4f9;
+  filter: brightness(1.2);
+  -webkit-filter: brightness(1.2);
+  transition: all 0.5s;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
 .name,
 .info {
   align-items: center;
