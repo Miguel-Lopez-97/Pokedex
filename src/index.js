@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from "react-dom";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
 import {ApiGen} from "./components/Api_Gen/Gen"
 import {Home} from "./components/Api_Gen/Home"
@@ -24,7 +24,7 @@ const url = [
 
 render(
   <React.StrictMode>
-  <BrowserRouter>
+  <HashRouter>
   <Routes>
       <Route path='/' element={<Header />}>
           <Route path="/" element={<Home/>} />
@@ -58,7 +58,7 @@ render(
           <Route path='*' element={<Navigate replace to='/' />} />
       </Route>
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
   </React.StrictMode>,
   rootElement
 );

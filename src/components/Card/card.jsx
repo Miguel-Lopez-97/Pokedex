@@ -20,7 +20,7 @@ const colors = {
   Dragon: "#7b68ee",
   Dark: "#808080",
   Fairy: "#ff88ee",
-  Unknown: "#efe9e1",
+  Unknown: "#efe9e0",
   Shadow: "#8673a1",
 };
 
