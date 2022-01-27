@@ -45,7 +45,8 @@ function ApiType(props) {
                   return a.dex - b.dex;
                 }), pokemonNew]
               )
-            });
+            })
+            ;
         });
       });
   };
