@@ -17,7 +17,8 @@ const url = [
   "https://pokeapi.co/api/v2/pokemon/?limit=156&offset=493",
   "https://pokeapi.co/api/v2/pokemon/?limit=72&offset=649",
   "https://pokeapi.co/api/v2/pokemon/?limit=88&offset=721",
-  "https://pokeapi.co/api/v2/pokemon/?limit=89&offset=809"
+  "https://pokeapi.co/api/v2/pokemon/?limit=89&offset=809",
+  "https://pokeapi.co/api/v2/pokemon/?offset=898&limit=220"
 ];
 
 render(
@@ -34,6 +35,7 @@ render(
           <Route path="/sixth_gen" element={<ApiGen urlApi={url[5]} />} />
           <Route path="/seventh_gen" element={<ApiGen urlApi={url[6]} />} />
           <Route path="/eighth_gen" element={<ApiGen urlApi={url[7]} />} />
+          <Route path="/alternative_forms" element={<ApiGen urlApi={url[8]} />} />
           <Route path="/normal" element={<ApiType urlApi={"https://pokeapi.co/api/v2/type/1"}/>}/>
           <Route path="/fighting" element={<ApiType urlApi={"https://pokeapi.co/api/v2/type/2"}/>}/>
           <Route path="/flying" element={<ApiType urlApi={"https://pokeapi.co/api/v2/type/3"}/>}/>

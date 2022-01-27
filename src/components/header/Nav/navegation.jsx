@@ -34,6 +34,9 @@ function NavBar() {
         <li>
           <Link to="/eighth_gen">Eighth Gen</Link>
         </li>
+        <li>
+          <Link to="/alternative_forms">Alternative Forms</Link>
+        </li>
       </ul>
     </>
   );

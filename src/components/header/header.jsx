@@ -8,7 +8,7 @@ function Header() {
     return (
       <div className="banner">
         <header>
-        <img src="https://cdn.atomix.vg/wp-content/uploads/2014/09/PokemonCompany.png" alt="Pokemon Baner" />
+        <img src="https://rajgaurav99.github.io/PokeCards-WEB/images/banner.png" alt="Pokemon Baner" />
         </header>
         <NavBar/>
         <NavTypes/>

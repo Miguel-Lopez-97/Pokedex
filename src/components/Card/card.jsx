@@ -25,9 +25,10 @@ const colors = {
 };
 
 function PokemonIndividual(props) {
-  const backgroundColor1 = colors[props.type1];
+  const {name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed}=props
+  const backgroundColor1 = colors[type1];
   const backgroundColor2 =
-    props.type2 == "null" ? colors[props.type1] : colors[props.type2];
+    type2 == "null" ? colors[type1] : colors[type2];
   const backgroundColorMix =
     "linear-gradient(135deg," +
     backgroundColor1 +
@@ -38,19 +39,33 @@ function PokemonIndividual(props) {
     <>
       <div className="card" style={{ background: backgroundColorMix }}>
         <div className="name">
-          <h1>#{props.dex.toString().padStart(3, "0")}</h1>
-          <h2>{props.name}</h2>
+          <h1>{dex>=898?"Alternative Form":"#"+dex.toString().padStart(3, "0")}</h1>
+          <h2>{name}</h2>
         </div>
         <div className="avatar">
-          <img src={props.avatarNormal} alt={props.name} />
-          <img src={props.avatarShiny} alt={props.name} />
+          {avatarNormal?<img src={avatarNormal} alt={name} />:<img src="https://www.latercera.com/resizer/CBmGvvFEACkiaL4Diatt7wyUqlM=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/LUOOHUM2OVEEXG7ZTRSNI6XWLY.png" alt="Missingno" />}
+          {avatarShiny?<img src={avatarShiny} alt={name} />:null}
         </div>
         <div className="info">
           <h3>Normal Sprit - Shiny Sprit</h3>
           <p>
-            {props.type1}
-            {props.type2 == "null" ? "" : " - " + props.type2}
+            {type1}
+            {type2 == "null" ? "" : " - " + type2}
           </p>
+          <p>
+            {ability1[0].toUpperCase()+ability1.slice(1)}
+            {ability2 == "null" ? "" : " / " + ability2[0].toUpperCase()+ability2.slice(1)}
+          </p>
+          <div className="stats">
+          <p className="statsP">
+            HP {hp} / Atk {attack} / Def {defense}</p>
+          <p className="statsP">
+            Sp. Atk {specialAttack} / Sp. Def {specialDefense}
+          </p>
+          <p className="statsP">
+            Speed {speed}
+          </p>
+          </div>
         </div>
       </div>
     </>

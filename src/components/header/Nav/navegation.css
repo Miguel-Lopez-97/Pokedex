@@ -30,3 +30,7 @@ a, button{
   font-weight: bold;
   text-decoration: none;
 }
+
+a:hover{
+  color:rgb(126, 103, 103)
+}
