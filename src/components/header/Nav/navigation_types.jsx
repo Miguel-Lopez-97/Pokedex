@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
 import "./navigation.css";
 
 export function NavTypes() {
