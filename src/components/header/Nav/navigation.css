@@ -37,6 +37,14 @@ li {
   width: 7vw;
   text-align: center;
 }
+li:first-child{
+  width: auto;
+  margin-left: 2vw;
+}
+li:last-child{
+  margin-right: 2vw;
+}
+
 a, button{
   color: whitesmoke;
   display: flex;
@@ -56,6 +64,7 @@ a:hover{
   font-weight: bold;
   text-decoration: none;
 }
+
 h1{
   color: aliceblue;
   text-align: center;
@@ -63,6 +72,7 @@ h1{
 
 button{
   display: none;
+  margin: 0;
 }
 
 @media screen and (max-width:780px)
