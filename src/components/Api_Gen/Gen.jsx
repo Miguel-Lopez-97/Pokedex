@@ -4,7 +4,7 @@ import "../header/Nav/navigation.css";
 
 export function ApiGen(props) {
   const [pokemon, setPokemon] = useState([]);
-  const {urlApi}=props;
+  const {urlApi, Gen}=props;
 
   const getApi = async (url) => {
     
@@ -56,6 +56,7 @@ export function ApiGen(props) {
 
   return (
     <>
+    <h1>{Gen} Generation Pokemon</h1>
     <div className="container">
       {pokemon.map((el) => (
         <PokemonIndividual

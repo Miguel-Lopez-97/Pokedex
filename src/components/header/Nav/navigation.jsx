@@ -1,41 +1,51 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./navigation.css";
 
 export function NavBar() {
-  
+  const [display, setDisplay] = useState("")
+
+  const onShow= ()=>{
+    if(display==="none"){
+    display.slice(0);
+    setDisplay("flex")}
+    else{display.slice(0);
+      setDisplay("none")}
+  }
+
   return (
     <>
-      <ul>
+    <button onClick={onShow}>List Generation</button>
+      <ul style={{display:display}}>
       <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={onShow}>Home</Link>
         </li>
         <li>
-          <Link to="/first_gen">First Gen</Link>
+          <Link to="/first_gen" onClick={onShow}>First Gen</Link>
         </li>
         <li>
-          <Link to="/second_gen">Second Gen</Link>
+          <Link to="/second_gen" onClick={onShow}>Second Gen</Link>
         </li>
         <li>
-          <Link to="/third_gen">Third Gen</Link>
+          <Link to="/third_gen" onClick={onShow}>Third Gen</Link>
         </li>
         <li>
-          <Link to="/fourth_gen">Fourth Gen</Link>
+          <Link to="/fourth_gen" onClick={onShow}>Fourth Gen</Link>
         </li>
         <li>
-          <Link to="/fifth_gen">Fifth Gen</Link>
+          <Link to="/fifth_gen" onClick={onShow}>Fifth Gen</Link>
         </li>
         <li>
-          <Link to="/sixth_gen">Sixth Gen</Link>
+          <Link to="/sixth_gen" onClick={onShow}>Sixth Gen</Link>
         </li>
         <li>
-          <Link to="/seventh_gen">Seventh Gen</Link>
+          <Link to="/seventh_gen" onClick={onShow}>Seventh Gen</Link>
         </li>
         <li>
-          <Link to="/eighth_gen">Eighth Gen</Link>
+          <Link to="/eighth_gen" onClick={onShow}>Eighth Gen</Link>
         </li>
         <li>
-          <Link to="/alternative_forms">Alternative Forms</Link>
+          <Link to="/alternative_forms" onClick={onShow}>Alternative Forms</Link>
         </li>
       </ul>
     </>

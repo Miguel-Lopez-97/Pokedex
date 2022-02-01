@@ -6,3 +6,7 @@ header{
 .banner{
     width: 100vw;
 }
+.banner img{
+    max-width: 90%;
+    height: auto;
+}

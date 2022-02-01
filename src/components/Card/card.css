@@ -110,3 +110,7 @@
   -o-transform: rotate(0deg);
 }
 }
+.name h1{
+  color: black;
+  text-align: center;
+}

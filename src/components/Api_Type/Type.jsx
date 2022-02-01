@@ -5,7 +5,7 @@ import "../header/Nav/navigation.css";
 
 export function ApiType(props) {
   const [pokemon, setPokemon] = useState([]);
-  const {urlApi}=props;
+  const {urlApi, Gen}=props;
 
   const getApi = async (url) => {
       fetch(url).then(setPokemon([]))
@@ -58,6 +58,7 @@ export function ApiType(props) {
 
   return (
     <>
+    <h1>{Gen} Type</h1>
     <div className="container">
       {pokemon.map((el) => (
         <PokemonIndividual

@@ -15,6 +15,8 @@ export function Header() {
         <>
         <Outlet/>
         </>
+        <NavBar/>
+        <NavTypes/>
       </div>
     );
   }
