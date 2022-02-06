@@ -1,22 +1,36 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import "./navigation.css";
 
 export function NavBar() {
-  const [display, setDisplay] = useState("")
+  const [displayGen, setDisplayGen] = useState()
+
+  const [display, setDisplay] = useState("none")
 
   const onShow= ()=>{
+    if(window.screen.width<780){
     if(display==="none"){
     display.slice(0);
     setDisplay("flex")}
     else{display.slice(0);
-      setDisplay("none")}
-  }
+      setDisplay("none")}}
+    else{setDisplay("flex")}
+  };
+
+  const onShowFirst= ()=>{
+    if(window.screen.width<780){
+        setDisplayGen("none")}
+    else{setDisplayGen("flex")}}
+  ;
+
+  useEffect(()=> 
+              {onShowFirst();},
+              );
 
   return (
     <>
     <button onClick={onShow}>List Generation</button>
-      <ul style={{display:display}}>
+      <ul style={{display:displayGen==="none"?display:displayGen}}>
       <li>
           <Link to="/" onClick={onShow}>Home</Link>
         </li>

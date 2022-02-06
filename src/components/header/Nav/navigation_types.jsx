@@ -1,22 +1,35 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./navigation.css";
 
 export function NavTypes() {
-  const [display, setDisplay] = useState("")
+  const [displayType, setDisplayType] = useState()
+  const [display, setDisplay] = useState("none")
 
   const onShow= ()=>{
+    if(window.screen.width<780){
     if(display==="none"){
     display.slice(0);
     setDisplay("flex")}
     else{display.slice(0);
-      setDisplay("none")}
-  }
+      setDisplay("none")}}
+    else{setDisplay("flex")}
+  };
+
+  const onShowFirst= ()=>{
+    if(window.screen.width<780){
+        setDisplayType("none")}
+    else{setDisplayType("flex")}}
+  ;
+
+  useEffect(()=> 
+              {onShowFirst();},
+              );
 
   return (
     <>
     <button onClick={onShow}>List Pokemon Types</button>
-      <ul className="Types" style={{display:display}}>
+      <ul className="Types" style={{display:displayType==="none"?display:displayType}}>
       <li>
           <Link to="/normal" onClick={onShow}>Normal</Link>
         </li>
