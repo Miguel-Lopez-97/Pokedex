@@ -19,8 +19,8 @@ export function ApiType(props) {
                 id: json.id,
                 dex: json.id,
                 name: json.name[0].toUpperCase() + json.name.slice(1),
-                avatarNormal: json.sprites.front_default,
-                avatarShiny: json.sprites.front_shiny,
+                avatarNormal: json.sprites.other.home.front_default,
+                avatarShiny: json.sprites.other.home.front_shiny,
                 type1:
                   json.types[0].type.name[0].toUpperCase() +
                   json.types[0].type.name.slice(1),
