@@ -38,7 +38,10 @@ export function ApiGen(props) {
                 defense: json.stats[2].base_stat,
                 specialAttack: json.stats[3].base_stat,
                 specialDefense: json.stats[4].base_stat,
-                speed: json.stats[5].base_stat
+                speed: json.stats[5].base_stat,
+                base_experience: json.base_experience,
+                weight: json.weight,
+                height:json.height
               };
               setPokemon(prev=>
                 [...prev.sort((a, b) => {
