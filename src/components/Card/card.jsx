@@ -25,7 +25,7 @@ const colors = {
 };
 
 export function PokemonIndividual(props) {
-  const {name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed}=props
+  const { name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed } = props
   const backgroundColor1 = colors[type1];
   const backgroundColor2 =
     type2 === "null" ? colors[type1] : colors[type2];
@@ -37,35 +37,53 @@ export function PokemonIndividual(props) {
     " 70%)";
   return (
     <>
-      <div className="card" style={{ background: backgroundColorMix }}>
+      <div className={`card ${props.hidden ? 'hidden-card-style' : ''}`} style={{ background: backgroundColorMix }}>
         <div className="name">
-          <h1>{dex>=898?"Alternative Form":"#"+dex.toString().padStart(3, "0")}</h1>
+          <h1>{props.hidden ? "???" : (dex >= 1026 ? "Alternative Form" : "#" + dex.toString().padStart(3, "0"))}</h1>
           <h2>{name}</h2>
         </div>
         <div className="avatar">
-          {avatarNormal?<img src={avatarNormal} alt={name} />:<img src="https://www.latercera.com/resizer/CBmGvvFEACkiaL4Diatt7wyUqlM=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/LUOOHUM2OVEEXG7ZTRSNI6XWLY.png" alt="Missingno" />}
-          {avatarShiny?<img src={avatarShiny} alt={name} />:null}
+          {props.hidden ?
+            <div style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem', color: '#555' }}>?</div>
+            :
+            (avatarNormal ? <img src={avatarNormal} alt={name} /> : <img src="https://www.latercera.com/resizer/CBmGvvFEACkiaL4Diatt7wyUqlM=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/LUOOHUM2OVEEXG7ZTRSNI6XWLY.png" alt="Missingno" />)
+          }
+          {(!props.hidden && avatarShiny) ? <img src={avatarShiny} alt={name} /> : null}
         </div>
         <div className="info">
           <h3>Normal Sprit - Shiny Sprit</h3>
-          <p>
-            {type1}
-            {type2 === "null" ? "" : " - " + type2}
-          </p>
-          <p>
-            {ability1[0].toUpperCase()+ability1.slice(1)}
-            {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase()+ability2.slice(1)}
-          </p>
-          <div className="stats">
-          <p className="statsP">
-            HP {hp} / Atk {attack} / Def {defense}</p>
-          <p className="statsP">
-            Sp. Atk {specialAttack} / Sp. Def {specialDefense}
-          </p>
-          <p className="statsP">
-            Speed {speed}
-          </p>
-          </div>
+          {props.hidden ? null : (
+            <>
+              <p>
+                {type1}
+                {type2 === "null" ? "" : " - " + type2}
+              </p>
+              <p>
+                {ability1[0].toUpperCase() + ability1.slice(1)}
+                {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase() + ability2.slice(1)}
+              </p>
+            </>
+          )}
+          {props.showStats !== false && !props.hidden && !props.customStat ? (
+            <div className="stats">
+              <p className="statsP">
+                HP {hp} / Atk {attack} / Def {defense}</p>
+              <p className="statsP">
+                Sp. Atk {specialAttack} / Sp. Def {specialDefense}
+              </p>
+              <p className="statsP">
+                Speed {speed}
+              </p>
+            </div>
+          ) : null}
+
+          {!props.hidden && props.customStat && (
+            <div className="stats" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem' }}>
+              <p className="statsP" style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#222', background: 'rgba(255,255,255,0.6)', padding: '5px 15px', borderRadius: '10px' }}>
+                {props.customStat.label}: {props.customStat.value}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

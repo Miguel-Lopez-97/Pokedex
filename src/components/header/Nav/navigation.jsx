@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import "./navigation.css";
 
 export function NavBar() {
@@ -7,31 +7,36 @@ export function NavBar() {
 
   const [display, setDisplay] = useState("none")
 
-  const onShow= ()=>{
-    if(window.screen.width<780){
-    if(display==="none"){
-    display.slice(0);
-    setDisplay("flex")}
-    else{display.slice(0);
-      setDisplay("none")}}
-    else{setDisplay("flex")}
+  const onShow = () => {
+    if (window.screen.width < 780) {
+      if (display === "none") {
+        display.slice(0);
+        setDisplay("flex")
+      }
+      else {
+        display.slice(0);
+        setDisplay("none")
+      }
+    }
+    else { setDisplay("flex") }
   };
 
-  const onShowFirst= ()=>{
-    if(window.screen.width<780){
-        setDisplayGen("none")}
-    else{setDisplayGen("flex")}}
-  ;
+  const onShowFirst = () => {
+    if (window.screen.width < 780) {
+      setDisplayGen("none")
+    }
+    else { setDisplayGen("flex") }
+  }
+    ;
 
-  useEffect(()=> 
-              {onShowFirst();},
-              );
+  useEffect(() => { onShowFirst(); },
+  );
 
   return (
     <>
-    <button onClick={onShow}>List Generation</button>
-      <ul style={{display:displayGen==="none"?display:displayGen}}>
-      <li>
+      <button onClick={onShow}>List Generation</button>
+      <ul style={{ display: displayGen === "none" ? display : displayGen }}>
+        <li>
           <Link to="/" onClick={onShow}>Home</Link>
         </li>
         <li>
@@ -59,7 +64,17 @@ export function NavBar() {
           <Link to="/eighth_gen" onClick={onShow}>Eighth Gen</Link>
         </li>
         <li>
-          <Link to="/alternative_forms" onClick={onShow}>Alternative Forms</Link>
+          <Link to="/ninth_gen" onClick={onShow}>Ninth Gen</Link>
+        </li>
+        <li>
+          <NavLink to="/alternative_forms" className="nav-link" activeClassName="active" onClick={onShow}>
+            Alternative Forms
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/trivia" className="nav-link" activeClassName="active" onClick={onShow}>
+            Trivia Game
+          </NavLink>
         </li>
       </ul>
     </>
