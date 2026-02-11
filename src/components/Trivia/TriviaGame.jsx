@@ -31,7 +31,9 @@ const STATS = [
     { label: "Defense", value: "defense" },
     { label: "Special Attack", value: "special-attack" },
     { label: "Special Defense", value: "special-defense" },
-    { label: "Speed", value: "speed" }
+    { label: "Speed", value: "speed" },
+    { label: "Weight", value: "weight" },
+    { label: "Height", value: "height" }
 ];
 
 export function TriviaGame() {
@@ -60,7 +62,10 @@ export function TriviaGame() {
         fetch("https://pokeapi.co/api/v2/pokemon/?limit=10000")
             .then(res => res.json())
             .then(data => {
-                setAllPokemonNames(data.results.map(p => p.name));
+                setAllPokemonNames(data.results.map(p => {
+                    const id = parseInt(p.url.split("/")[6]);
+                    return { name: p.name, id: id };
+                }));
             });
     }, []);
 
@@ -136,7 +141,9 @@ export function TriviaGame() {
                             front_shiny: d.sprites.other?.home?.front_shiny || d.sprites.front_shiny
                         },
                         abilities: d.abilities,
-                        hints: shuffledHints
+                        hints: shuffledHints,
+                        weight: d.weight,
+                        height: d.height
                     };
                 })
             );
@@ -165,6 +172,12 @@ export function TriviaGame() {
                     valA = a.stats.total;
                     valB = b.stats.total;
 
+                } else if (filters.stat === 'weight') {
+                    valA = a.weight;
+                    valB = b.weight;
+                } else if (filters.stat === 'height') {
+                    valA = a.height;
+                    valB = b.height;
                 } else {
                     valA = a.stats[filters.stat.replace('-', '_')];
                     valB = b.stats[filters.stat.replace('-', '_')];
@@ -214,7 +227,11 @@ export function TriviaGame() {
         setSearchQuery(val);
 
         if (val.length > 2) {
-            const match = allPokemonNames.filter(n => n.includes(val.toLowerCase())).slice(0, 5);
+            const match = allPokemonNames.filter(p => {
+                if (!p.name.includes(val.toLowerCase())) return false;
+                if (!filters.includeAltForms && p.id > 1025) return false;
+                return true;
+            }).slice(0, 5);
             setSuggestions(match);
         } else {
             setSuggestions([]);
@@ -385,8 +402,8 @@ export function TriviaGame() {
                         {suggestions.length > 0 && (
                             <ul className="suggestions-list">
                                 {suggestions.map(s => (
-                                    <li key={s} className="suggestion-item" onClick={() => submitGuess(s)}>
-                                        {s}
+                                    <li key={s.name} className="suggestion-item" onClick={() => submitGuess(s.name)}>
+                                        {s.name}
                                     </li>
                                 ))}
                             </ul>
@@ -427,6 +444,10 @@ export function TriviaGame() {
 
                                 if (statKey === 'total') {
                                     statValue = p.stats.total;
+                                } else if (statKey === 'weight') {
+                                    statValue = (p.weight / 10) + " kg";
+                                } else if (statKey === 'height') {
+                                    statValue = (p.height / 10) + " m";
                                 } else {
                                     statValue = p.stats[statKey.replace('-', '_')];
                                 }

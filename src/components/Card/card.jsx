@@ -24,8 +24,29 @@ const colors = {
   Shadow: "#8673a1",
 };
 
+const getRegion = (dex, speciesId, name) => {
+  const n = name ? name.toLowerCase() : "";
+  if (n.includes("alola")) return "Alola";
+  if (n.includes("galar")) return "Galar";
+  if (n.includes("hisui")) return "Hisui";
+  if (n.includes("paldea") && !n.includes("tauros")) return "Paldea"; // Paldean Tauros logic if needed, simplify for now
+
+  // Use speciesId if available (fallback to dex if not, though dex for alt forms is > 10000)
+  const id = speciesId || dex;
+
+  if (id <= 151) return "Kanto";
+  if (id <= 251) return "Johto";
+  if (id <= 386) return "Hoenn";
+  if (id <= 493) return "Sinnoh";
+  if (id <= 649) return "Unova";
+  if (id <= 721) return "Kalos";
+  if (id <= 809) return "Alola";
+  if (id <= 905) return "Galar";
+  return "Paldea";
+};
+
 export function PokemonIndividual(props) {
-  const { name, dex, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed } = props
+  const { name, dex, speciesId, avatarNormal, avatarShiny, type1, type2, ability1, ability2, hp, attack, defense, specialAttack, specialDefense, speed, minimalist } = props
   const backgroundColor1 = colors[type1];
   const backgroundColor2 =
     type2 === "null" ? colors[type1] : colors[type2];
@@ -39,8 +60,9 @@ export function PokemonIndividual(props) {
     <>
       <div className={`card ${props.hidden ? 'hidden-card-style' : ''}`} style={{ background: backgroundColorMix }}>
         <div className="name">
-          <h1>{props.hidden ? "???" : (dex >= 1026 ? "Alternative Form" : "#" + dex.toString().padStart(3, "0"))}</h1>
+          {!minimalist && <h1>{props.hidden ? "???" : (dex >= 1026 ? "Alternative Form" : "#" + dex.toString().padStart(3, "0"))}</h1>}
           <h2>{name}</h2>
+          {!props.hidden && !minimalist && <h3 style={{ fontSize: '1rem', marginTop: '0px', color: '#555' }}>{getRegion(dex, speciesId, name)}</h3>}
         </div>
         <div className="avatar">
           {props.hidden ?
@@ -50,41 +72,43 @@ export function PokemonIndividual(props) {
           }
           {(!props.hidden && avatarShiny) ? <img src={avatarShiny} alt={name} /> : null}
         </div>
-        <div className="info">
-          <h3>Normal Sprit - Shiny Sprit</h3>
-          {props.hidden ? null : (
-            <>
-              <p>
-                {type1}
-                {type2 === "null" ? "" : " - " + type2}
-              </p>
-              <p>
-                {ability1[0].toUpperCase() + ability1.slice(1)}
-                {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase() + ability2.slice(1)}
-              </p>
-            </>
-          )}
-          {props.showStats !== false && !props.hidden && !props.customStat ? (
-            <div className="stats">
-              <p className="statsP">
-                HP {hp} / Atk {attack} / Def {defense}</p>
-              <p className="statsP">
-                Sp. Atk {specialAttack} / Sp. Def {specialDefense}
-              </p>
-              <p className="statsP">
-                Speed {speed}
-              </p>
-            </div>
-          ) : null}
+        {!minimalist && (
+          <div className="info">
+            {props.showStats !== false && <h3>Normal Sprit - Shiny Sprit</h3>}
+            {props.hidden ? null : (
+              <>
+                <p>
+                  {type1}
+                  {type2 === "null" ? "" : " - " + type2}
+                </p>
+                <p>
+                  {ability1[0].toUpperCase() + ability1.slice(1)}
+                  {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase() + ability2.slice(1)}
+                </p>
+              </>
+            )}
+            {props.showStats !== false && !props.hidden && !props.customStat ? (
+              <div className="stats">
+                <p className="statsP">
+                  HP {hp} / Atk {attack} / Def {defense}</p>
+                <p className="statsP">
+                  Sp. Atk {specialAttack} / Sp. Def {specialDefense}
+                </p>
+                <p className="statsP">
+                  Speed {speed}
+                </p>
+              </div>
+            ) : null}
 
-          {!props.hidden && props.customStat && (
-            <div className="stats" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem' }}>
-              <p className="statsP" style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#222', background: 'rgba(255,255,255,0.6)', padding: '5px 15px', borderRadius: '10px' }}>
-                {props.customStat.label}: {props.customStat.value}
-              </p>
-            </div>
-          )}
-        </div>
+            {!props.hidden && props.customStat && (
+              <div className="stats" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem' }}>
+                <p className="statsP" style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#222', background: 'rgba(255,255,255,0.6)', padding: '5px 15px', borderRadius: '10px' }}>
+                  {props.customStat.label}: {props.customStat.value}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
