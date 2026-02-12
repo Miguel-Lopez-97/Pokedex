@@ -140,6 +140,84 @@ export function Home() {
     });
   }
 
+  // Share Team Feature
+  // Share Team Feature
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const teamParam = params.get("team");
+    const minParam = params.get("minimalist");
+
+    if (minParam === "true") {
+      setIsMinimalist(true);
+    } else if (minParam === "false") {
+      setIsMinimalist(false);
+    }
+
+    if (teamParam) {
+      const loadSharedTeam = async () => {
+        setLoading(true);
+        const newTeam = {};
+        const pairs = teamParam.split("|");
+
+        for (const pair of pairs) {
+          const [type, id] = pair.split(":");
+          if (type && id) {
+            try {
+              const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+              const json = await res.json();
+
+              let speciesId = json.id;
+              if (json.species && json.species.url) {
+                const parts = json.species.url.split('/');
+                speciesId = parseInt(parts[parts.length - 2]);
+              }
+
+              // Determine sprite based on shiny preference (default to normal for shared)
+              const mainSprite = json.sprites.other.home.front_default || json.sprites.front_default;
+
+              newTeam[type] = {
+                id: json.id,
+                dex: json.id,
+                speciesId: speciesId,
+                name: json.name[0].toUpperCase() + json.name.slice(1),
+                avatarNormal: mainSprite,
+                avatarShiny: null, // Shared view defaults to normal for simplicity unless we encode shiny state too
+                type1: json.types[0].type.name[0].toUpperCase() + json.types[0].type.name.slice(1),
+                type2: json.types.length === 2 ? json.types[1].type.name[0].toUpperCase() + json.types[1].type.name.slice(1) : "null",
+                ability1: (json.abilities && json.abilities.length > 0) ? json.abilities[0].ability.name : "undefined",
+                ability2: (json.abilities && json.abilities.length > 1) ? json.abilities[1].ability.name : "null",
+                hp: json.stats[0].base_stat,
+                attack: json.stats[1].base_stat,
+                defense: json.stats[2].base_stat,
+                specialAttack: json.stats[3].base_stat,
+                specialDefense: json.stats[4].base_stat,
+                speed: json.stats[5].base_stat
+              };
+            } catch (err) {
+              console.error(`Error loading shared pokemon ${id}`, err);
+            }
+          }
+        }
+        setTeam(newTeam);
+        setLoading(false);
+        // Optional: Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      };
+      loadSharedTeam();
+    }
+  }, []);
+
+  const handleShare = () => {
+    const teamString = Object.entries(team)
+      .map(([type, member]) => `${type}:${member.id}`)
+      .join("|");
+
+    const url = `${window.location.origin}${window.location.pathname}?team=${teamString}&minimalist=${isMinimalist}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert("Team URL (with view mode) copied to clipboard! Share it with your friends.");
+    });
+  };
+
   const handleReset = () => {
     if (window.confirm("Are you sure you want to reset your entire team?")) {
       setTeam({});
@@ -227,24 +305,45 @@ export function Home() {
           {isMinimalist ? "Show Details Mode" : "Minimalist Mode"}
         </button>
 
-        <button
-          onClick={() => setShowAnalysis(true)}
-          disabled={Object.keys(team).length < 18}
-          style={{
-            background: Object.keys(team).length === 18 ? '#faca04' : '#555',
-            color: Object.keys(team).length === 18 ? '#222' : '#aaa',
-            border: 'none',
-            padding: '10px 20px',
-            borderRadius: '8px',
-            fontWeight: 'bold',
-            cursor: Object.keys(team).length === 18 ? 'pointer' : 'not-allowed',
-            fontSize: '1rem',
-            width: '100%',
-            opacity: Object.keys(team).length === 18 ? 1 : 0.6
-          }}
-        >
-          Analyze Team {Object.keys(team).length}/18
-        </button>
+        <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
+          <button
+            onClick={() => setShowAnalysis(true)}
+            disabled={Object.keys(team).length < 18}
+            style={{
+              flex: 1,
+              background: Object.keys(team).length === 18 ? '#faca04' : '#555',
+              color: Object.keys(team).length === 18 ? '#222' : '#aaa',
+              border: 'none',
+              padding: '10px',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              cursor: Object.keys(team).length === 18 ? 'pointer' : 'not-allowed',
+              fontSize: '1rem',
+              opacity: Object.keys(team).length === 18 ? 1 : 0.6
+            }}
+          >
+            Analyze {Object.keys(team).length}/18
+          </button>
+
+          <button
+            onClick={handleShare}
+            disabled={Object.keys(team).length === 0}
+            style={{
+              background: '#333',
+              color: 'white',
+              border: '1px solid #777',
+              padding: '10px',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              cursor: Object.keys(team).length > 0 ? 'pointer' : 'not-allowed',
+              fontSize: '1rem',
+              opacity: Object.keys(team).length > 0 ? 1 : 0.6
+            }}
+            title="Share Team URL"
+          >
+            📤
+          </button>
+        </div>
       </div>
 
       <TeamAnalysis team={team} isOpen={showAnalysis} onClose={() => setShowAnalysis(false)} />
