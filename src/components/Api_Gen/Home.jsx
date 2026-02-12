@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../header/Nav/navigation.css";
 import { PokemonIndividual } from "../Card/card";
+import { TeamAnalysis } from "../Analysis/TeamAnalysis"; // Import Analysis
 import "../Trivia/trivia.css";
 
 // Alphabetical Order
@@ -10,7 +11,7 @@ const TYPES = [
   "Psychic", "Rock", "Steel", "Water"
 ];
 
-const typeColors = {
+export const typeColors = {
   Normal: "#A8A77A",
   Fire: "#EE8130",
   Water: "#6390F0",
@@ -59,6 +60,7 @@ export function Home() {
   const [genFilter, setGenFilter] = useState(GENERATIONS[0].name);
   const [isShiny, setIsShiny] = useState(false);
   const [isMinimalist, setIsMinimalist] = useState(false);
+  const [showAnalysis, setShowAnalysis] = useState(false);
 
   // Track hovered slot for showing removal button
   const [hoveredSlot, setHoveredSlot] = useState(null);
@@ -224,7 +226,28 @@ export function Home() {
         >
           {isMinimalist ? "Show Details Mode" : "Minimalist Mode"}
         </button>
+
+        <button
+          onClick={() => setShowAnalysis(true)}
+          disabled={Object.keys(team).length < 18}
+          style={{
+            background: Object.keys(team).length === 18 ? '#faca04' : '#555',
+            color: Object.keys(team).length === 18 ? '#222' : '#aaa',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            cursor: Object.keys(team).length === 18 ? 'pointer' : 'not-allowed',
+            fontSize: '1rem',
+            width: '100%',
+            opacity: Object.keys(team).length === 18 ? 1 : 0.6
+          }}
+        >
+          Analyze Team {Object.keys(team).length}/18
+        </button>
       </div>
+
+      <TeamAnalysis team={team} isOpen={showAnalysis} onClose={() => setShowAnalysis(false)} />
 
       <div className="team-grid" style={{
         width: '100%',
