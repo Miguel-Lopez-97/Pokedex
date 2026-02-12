@@ -36,9 +36,10 @@ const STATS = [
 
 const PERCENTAGES = [
     { label: "100%", value: 1.0 },
-    { label: "80%", value: 0.8 },
+    { label: "75%", value: 0.75 },
     { label: "50%", value: 0.5 },
-    { label: "25%", value: 0.25 }
+    { label: "25%", value: 0.25 },
+    { label: "10%", value: 0.1 }
 ];
 
 export function HigherLower() {
