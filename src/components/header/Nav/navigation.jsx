@@ -77,6 +77,11 @@ export function NavBar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/poke-trivia" className="nav-link" activeClassName="active" onClick={onShow}>
+            PokeTrivia Challenge
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/higher-lower" className="nav-link" activeClassName="active" onClick={onShow}>
             Higher or Lower
           </NavLink>

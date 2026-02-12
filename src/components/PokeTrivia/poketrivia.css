@@ -1,0 +1,279 @@
+.poketrivia-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.setup-form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.setup-form h1 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.start-btn {
+    padding: 12px;
+    background: #ffcb05;
+    /* Pokemon Yellow */
+    color: #2a75bb;
+    /* Pokemon Blue */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    background: #f0be00;
+}
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.pokemon-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.pokemon-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.hangman-word {
+    display: flex;
+    gap: 10px;
+    font-size: 2rem;
+    font-family: monospace;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.letter-slot {
+    border-bottom: 3px solid #333;
+    min-width: 25px;
+    text-align: center;
+    height: 40px;
+}
+
+.trivia-input {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 2px solid #2a75bb;
+    border-radius: 5px;
+    outline: none;
+    text-align: center;
+    width: 200px;
+}
+
+.check-btn {
+    padding: 10px 20px;
+    background: #2a75bb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.check-btn:hover {
+    background: #1e5a96;
+}
+
+.type-selector,
+.ability-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.type-btn,
+.ability-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.type-btn:hover,
+.ability-btn:hover {
+    transform: scale(1.1);
+}
+
+.overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Pokemon Type Colors matching Card component roughly */
+.type-btn[data-type="Normal"] {
+    background: #a8a77a;
+}
+
+.type-btn[data-type="Fighting"] {
+    background: #c22e28;
+}
+
+.type-btn[data-type="Flying"] {
+    background: #a98ff3;
+}
+
+.type-btn[data-type="Poison"] {
+    background: #a33ea1;
+}
+
+.type-btn[data-type="Ground"] {
+    background: #e2bf65;
+}
+
+.type-btn[data-type="Rock"] {
+    background: #b6a136;
+}
+
+.type-btn[data-type="Bug"] {
+    background: #a6b91a;
+}
+
+.type-btn[data-type="Ghost"] {
+    background: #735797;
+}
+
+.type-btn[data-type="Steel"] {
+    background: #b7b7ce;
+}
+
+.type-btn[data-type="Fire"] {
+    background: #ee8130;
+}
+
+.type-btn[data-type="Water"] {
+    background: #6390f0;
+}
+
+.type-btn[data-type="Grass"] {
+    background: #7ac74c;
+}
+
+.type-btn[data-type="Electric"] {
+    background: #f7d02c;
+    color: #333;
+}
+
+.type-btn[data-type="Psychic"] {
+    background: #f95587;
+}
+
+.type-btn[data-type="Ice"] {
+    background: #96d9d6;
+    color: #333;
+}
+
+.type-btn[data-type="Dragon"] {
+    background: #6f35fc;
+}
+
+.type-btn[data-type="Dark"] {
+    background: #705746;
+}
+
+.type-btn[data-type="Fairy"] {
+    background: #d685ad;
+}
+
+.ability-btn {
+    background: #2a75bb;
+}
+
+.give-up-btn {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.give-up-btn:hover {
+    background-color: #d32f2f;
+    color: white;
+}
