@@ -7,6 +7,7 @@ import { Home } from "./components/Api_Gen/Home"
 import { Header } from "./components/header/header";
 import { ApiType } from "./components/Api_Type/Type";
 import { TriviaGame } from "./components/Trivia/TriviaGame";
+import { HigherLower } from "./components/HigherLower/HigherLower";
 import reportWebVitals from './reportWebVitals';
 
 const rootElement = document.getElementById("root");
@@ -30,6 +31,7 @@ render(
       <Routes>
         <Route path='/' element={<Header />}>
           <Route path="/trivia" element={<TriviaGame />} />
+          <Route path="/higher-lower" element={<HigherLower />} />
           <Route path="/" element={<Home />} />
           <Route path="/first_gen" element={<ApiGen urlApi={url[0]} Gen="Kanto - First" />} />
           <Route path="/second_gen" element={<ApiGen urlApi={url[1]} Gen="Johto - Second" />} />

@@ -82,8 +82,8 @@ export function PokemonIndividual(props) {
                   {type2 === "null" ? "" : " - " + type2}
                 </p>
                 <p>
-                  {ability1[0].toUpperCase() + ability1.slice(1)}
-                  {ability2 === "null" ? "" : " / " + ability2[0].toUpperCase() + ability2.slice(1)}
+                  {ability1 && ability1 !== "undefined" && ability1 !== "null" ? ability1[0].toUpperCase() + ability1.slice(1) : "???"}
+                  {ability2 && ability2 !== "undefined" && ability2 !== "null" ? " / " + ability2[0].toUpperCase() + ability2.slice(1) : ""}
                 </p>
               </>
             )}

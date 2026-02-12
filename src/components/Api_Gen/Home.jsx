@@ -32,7 +32,7 @@ const typeColors = {
 };
 
 const GENERATIONS = [
-  { name: "All Generations", limit: 10000, offset: 0 },
+  { name: "All Generations", limit: 100000, offset: 0 },
   { name: "Gen 1 (Kanto)", limit: 151, offset: 0 },
   { name: "Gen 2 (Johto)", limit: 100, offset: 151 },
   { name: "Gen 3 (Hoenn)", limit: 135, offset: 251 },
@@ -41,7 +41,8 @@ const GENERATIONS = [
   { name: "Gen 6 (Kalos)", limit: 72, offset: 649 },
   { name: "Gen 7 (Alola)", limit: 88, offset: 721 },
   { name: "Gen 8 (Galar)", limit: 96, offset: 809 },
-  { name: "Gen 9 (Paldea)", limit: 120, offset: 905 }
+  { name: "Gen 9 (Paldea)", limit: 120, offset: 905 },
+  { name: "Alternative Forms", limit: 100000, offset: 10000 }
 ];
 
 export function Home() {
@@ -108,8 +109,8 @@ export function Home() {
         avatarShiny: null,
         type1: json.types[0].type.name[0].toUpperCase() + json.types[0].type.name.slice(1),
         type2: json.types.length === 2 ? json.types[1].type.name[0].toUpperCase() + json.types[1].type.name.slice(1) : "null",
-        ability1: json.abilities[0].ability.name,
-        ability2: json.abilities.length === 2 ? json.abilities[1].ability.name : "null",
+        ability1: (json.abilities && json.abilities.length > 0) ? json.abilities[0].ability.name : "undefined",
+        ability2: (json.abilities && json.abilities.length > 1) ? json.abilities[1].ability.name : "null",
         hp: json.stats[0].base_stat,
         attack: json.stats[1].base_stat,
         defense: json.stats[2].base_stat,
@@ -259,21 +260,19 @@ export function Home() {
               }}
               className="team-slot"
             >
-              {!member && (
-                <div style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  background: typeColors[type],
-                  color: 'white',
-                  padding: '5px 10px',
-                  borderRadius: '20px',
-                  fontWeight: 'bold',
-                  zIndex: 10
-                }}>
-                  {type}
-                </div>
-              )}
+              <div style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: typeColors[type],
+                color: 'white',
+                padding: '5px 10px',
+                borderRadius: '20px',
+                fontWeight: 'bold',
+                zIndex: 10
+              }}>
+                {type}
+              </div>
 
               {member ? (
                 <>

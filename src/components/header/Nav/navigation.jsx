@@ -76,6 +76,11 @@ export function NavBar() {
             Trivia Game
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/higher-lower" className="nav-link" activeClassName="active" onClick={onShow}>
+            Higher or Lower
+          </NavLink>
+        </li>
       </ul>
     </>
   );
