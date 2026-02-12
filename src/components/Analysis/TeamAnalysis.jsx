@@ -60,6 +60,7 @@ export function TeamAnalysis({ team, isOpen, onClose }) {
         let resist2 = []; // x0.5 Resistance
         let resist4 = []; // x0.25 Resistance
         let neutral = []; // x1 Neutral
+        let totalScore = 0;
 
         Object.values(team).forEach(member => {
             // Find indices for defender types
@@ -75,19 +76,34 @@ export function TeamAnalysis({ team, isOpen, onClose }) {
                 effectiveness *= TYPE_CHART[attackerIndex][defIndex2];
             }
 
-            if (effectiveness === 0) immune.push(member.name);
-            else if (effectiveness === 0.25) resist4.push(member.name);
-            else if (effectiveness === 0.5) resist2.push(member.name);
-            else if (effectiveness === 1) neutral.push(member.name);
-            else if (effectiveness === 2) weak2.push(member.name);
-            else if (effectiveness === 4) weak4.push(member.name);
+            if (effectiveness === 0) { immune.push(member.name); totalScore += 0; }
+            else if (effectiveness === 0.25) { resist4.push(member.name); totalScore += 0.25; }
+            else if (effectiveness === 0.5) { resist2.push(member.name); totalScore += 0.5; }
+            else if (effectiveness === 1) { neutral.push(member.name); totalScore += 1; }
+            else if (effectiveness === 2) { weak2.push(member.name); totalScore += 2; }
+            else if (effectiveness === 4) { weak4.push(member.name); totalScore += 4; }
         });
 
         return {
             type: attackerType,
-            weak4, weak2, immune, resist2, resist4, neutral
+            weak4, weak2, immune, resist2, resist4, neutral, totalScore
         };
     });
+
+    // Helper to get top N with ties
+    const getTopWithTies = (list, compareFn, n = 3) => {
+        const sorted = [...list].sort(compareFn);
+        if (sorted.length <= n) return sorted;
+
+        const thresholdValue = sorted[n - 1].totalScore;
+        // Include all items that have the same score as the Nth item
+        return sorted.filter(item =>
+            compareFn(item, sorted[n - 1]) <= 0 || item.totalScore === thresholdValue
+        );
+    };
+
+    const weakestTypes = getTopWithTies(defensiveAnalysis, (a, b) => b.totalScore - a.totalScore, 3);
+    const strongestTypes = getTopWithTies(defensiveAnalysis, (a, b) => a.totalScore - b.totalScore, 3);
 
     const renderCell = (list, color, bold = false) => {
         if (list.length === 0) return <td style={{ padding: '8px', color: '#555' }}>-</td>;
@@ -103,6 +119,47 @@ export function TeamAnalysis({ team, isOpen, onClose }) {
             >
                 {list.length}
             </td>
+        );
+    };
+
+    const renderAnalysisCard = (title, items, isWeakness) => {
+        let currentRank = 0;
+        let lastScore = -1;
+
+        return (
+            <div style={{ flex: 1, minWidth: '300px', background: '#333', padding: '15px', borderRadius: '10px' }}>
+                <h4 style={{ margin: '0 0 10px 0', color: isWeakness ? '#ff6666' : '#66ff66', textAlign: 'center' }}>
+                    {title}
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {items.map((item, index) => {
+                        // Handle Ranking with Ties
+                        if (item.totalScore !== lastScore) {
+                            currentRank++;
+                            lastScore = item.totalScore;
+                        }
+
+                        let rankIcon = `#${currentRank}`;
+                        let rankColor = '#white';
+
+                        if (currentRank === 1) { rankIcon = "🥇"; rankColor = "#FFD700"; }
+                        else if (currentRank === 2) { rankIcon = "🥈"; rankColor = "#C0C0C0"; }
+                        else if (currentRank === 3) { rankIcon = "🥉"; rankColor = "#CD7F32"; }
+
+                        return (
+                            <div key={item.type} style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', background: 'rgba(0,0,0,0.3)', padding: '8px 10px', borderRadius: '5px' }}>
+                                <span style={{ marginRight: '10px', fontSize: '1.2rem', minWidth: '30px', textAlign: 'center', color: rankColor, fontWeight: 'bold' }}>
+                                    {rankIcon}
+                                </span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: typeColors[item.type] }}></div>
+                                    {item.type}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         );
     };
 
@@ -167,6 +224,12 @@ export function TeamAnalysis({ team, isOpen, onClose }) {
                                 }}>{count}</span>
                             </div>
                         ))}
+                    </div>
+
+                    {/* Top 3 Weak/Strong Section */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
+                        {renderAnalysisCard("Top Weaknesses (Takes most dmg)", weakestTypes, true)}
+                        {renderAnalysisCard("Top Resistances (Takes least dmg)", strongestTypes, false)}
                     </div>
 
                     {/* Weakness Analysis Section */}
