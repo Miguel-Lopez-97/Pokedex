@@ -1,3 +1,17 @@
+/* =========================================
+   TRIVIA GAME - VARIABLES & BASE
+   ========================================= */
+:root {
+  --pk-blue: #3c5aa6;
+  --pk-yellow: #ffcb05;
+  --pk-red: #ef5350;
+  --pk-green: #66bb6a;
+  --bg-dark: #222;
+  --text-dark: #333;
+  --glass-white: rgba(255, 255, 255, 0.95);
+  --radius: 1.5rem;
+}
+
 .trivia-container {
   display: flex;
   flex-direction: column;
@@ -5,48 +19,121 @@
   min-height: 100vh;
   width: 100%;
   padding: 2rem;
-  color: #333;
-  /* Dark text for light mode */
   box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text-dark);
 }
 
-/* Clean Light Theme */
+/* =========================================
+   SETUP FORM (Estilo Pokédex Moderno)
+   ========================================= */
 .setup-form {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--glass-white);
   padding: 2.5rem;
-  border-radius: 1rem;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 35rem;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.2rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Barra decorativa superior */
+.setup-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 600px;
-  border: 1px solid #ddd;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  margin-top: 2rem;
+  height: 6px;
+  background: linear-gradient(90deg, var(--pk-blue), var(--pk-yellow));
 }
 
 .setup-form h1 {
-  text-align: center;
-  color: #3c5aa6;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-  border-bottom: 3px solid #faca04;
-  padding-bottom: 10px;
-  display: inline-block;
-  align-self: center;
+  color: var(--pk-blue);
+  font-size: 2.2rem;
+  margin: 0.5rem 0 1.5rem 0;
+  font-weight: 800;
 }
 
-.form-group {
+/* Caja de Instrucciones (Fixed) */
+.instructions-box {
+  background: #f4f6f9;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  border-left: 5px solid var(--pk-blue);
+}
+
+.instructions-box h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--pk-blue);
+  font-size: 1.1rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
 }
 
+.instructions-list {
+  padding: 0;
+  margin: 1rem 0 0 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.instructions-list li {
+  background: white;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+}
+
+.instructions-list li strong {
+  color: var(--pk-blue);
+  min-width: 80px;
+  display: inline-block;
+}
+
+/* Inputs y Selects */
+.form-group {
+  text-align: left;
+}
+
 .form-group label {
-  font-weight: bold;
-  color: #444;
-  font-size: 1.1rem;
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  margin-left: 0.5rem;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  border: 2px solid #eee;
+  background-color: #fafafa;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.form-group select:focus {
+  border-color: var(--pk-blue);
+  background: white;
 }
 
 .checkbox-label {
@@ -54,323 +141,223 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-}
-
-.form-group select,
-.form-group input {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 2px solid #ddd;
-  background: #f9f9f9;
-  color: #333;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.form-group select:focus,
-.form-group input:focus {
-  border-color: #3c5aa6;
-  outline: none;
-  background: white;
+  font-weight: 600;
+  color: #444;
+  padding: 0.5rem;
 }
 
 .start-btn {
-  padding: 1.2rem;
-  background: #ffcb05;
-  /* Pokemon Yellow */
-  color: #2a407a;
-  /* Pokemon Blue */
-  font-weight: 800;
-  font-size: 1.3rem;
-  border: none;
-  border-radius: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 1rem;
+  padding: 1rem;
+  background: var(--pk-yellow);
+  color: var(--pk-blue);
+  font-weight: 800;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 100%;
+  box-shadow: 0 4px 0 #c7a008;
+  transition: transform 0.1s;
 }
 
-.start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  background: #faca04;
-}
+.start-btn:active { transform: translateY(4px); box-shadow: none; }
 
-.start-btn:active {
-  transform: translateY(0);
-}
-
-.instructions-box {
-  background: #f0f4f8;
-  border-left: 5px solid #3c5aa6;
-  color: #444;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: left;
-}
-
-.instructions-box h3 {
-  margin-top: 0;
-  color: #2a407a;
-}
-
-.instructions-box p {
-  margin: 5px 0;
-}
-
-.instructions-list {
-  padding-left: 20px;
-  margin: 5px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
+/* =========================================
+   GAME AREA (HUD)
+   ========================================= */
 .game-area {
   width: 100%;
+  max-width: 90vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1.5rem;
 }
 
+.game-hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.hud-card {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.hud-card strong { color: var(--pk-yellow); }
+
+.reconfigure-btn {
+  background: transparent;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.reconfigure-btn:hover { background: #eee; color: #333; }
+
+/* =========================================
+   SEARCH BAR
+   ========================================= */
 .search-container {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  margin-bottom: 2rem;
+  max-width: 600px;
   z-index: 100;
 }
 
 .search-input {
   width: 100%;
-  padding: 1rem;
-  border-radius: 30px;
-  border: 2px solid #444;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  padding: 1.2rem 2rem;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   font-size: 1.2rem;
   outline: none;
-  box-sizing: border-box;
+  text-align: center;
+  transition: box-shadow 0.2s;
 }
 
 .search-input:focus {
-  border-color: #4f9;
-  box-shadow: 0 0 15px rgba(68, 255, 153, 0.3);
+  box-shadow: 0 15px 35px rgba(60, 90, 166, 0.2);
+  border: 2px solid var(--pk-blue);
 }
 
 .suggestions-list {
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #222;
-  border-radius: 0 0 15px 15px;
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #444;
+  top: 110%;
+  left: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   list-style: none;
   padding: 0;
   margin: 0;
+  overflow: hidden;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .suggestion-item {
-  padding: 0.8rem 1.2rem;
+  padding: 1rem;
   cursor: pointer;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #eee;
+  transition: background 0.1s;
 }
 
-.suggestion-item:hover {
-  background: #444;
-}
+.suggestion-item:hover { background: #f0f8ff; color: var(--pk-blue); font-weight: bold; }
 
+/* =========================================
+   GRID & CARDS
+   ========================================= */
 .cards-grid {
   display: flex;
-  justify-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   gap: 2rem;
   width: 100%;
-  padding: 0 2rem;
-  justify-items: center;
 }
 
-@media (max-width: 800px) {
-  .cards-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-/* Hidden Card Styles */
-.card-hidden-wrapper {
-  position: relative;
-}
-
-.card-hidden .avatar img {
-  filter: brightness(0) blur(5px);
-  transition: filter 1s ease;
-}
-
-.card-hidden .name h2 {
-  display: none;
-}
-
-.card-hidden .info {
-  display: none;
-}
-
-.victory-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.9);
-  padding: 3rem;
-  border-radius: 20px;
-  text-align: center;
-  z-index: 1000;
-  border: 2px solid #ffd700;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-}
-
-.victory-message h1 {
-  font-size: 3rem;
-  color: #ffd700;
-  margin-bottom: 1rem;
-}
-
-.victory-message.gameover {
-  border-color: #ff4444;
-  box-shadow: 0 0 50px rgba(255, 68, 68, 0.5);
-}
-
-.victory-message.gameover h1 {
-  color: #ff4444;
-}
-
-.reset-btn {
-  background: #4f9;
-  color: black;
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 1rem;
-  display: flex;
-  /* Ensure it takes up space */
-  position: relative;
-  z-index: 200;
-  /* Higher z-index to be safe */
-  align-self: center !important;
-}
-
-.reconfigure-btn {
-  align-self: flex-end;
-  margin-right: 10%;
-  margin-bottom: 1rem;
-  background: #555;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-.reset-btn:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-
-.hints-section {
-  margin-top: 1rem;
+/* Wrapper para la carta y sus pistas */
+.trivia-card-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  z-index: 100;
+  width: 300px; /* Ancho fijo para consistencia */
 }
 
-.hint-text {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
-  border-radius: 5px;
-  color: #ffd700;
-  font-size: 0.9rem;
-  text-align: center;
+/* LOGICA DE OCULTO (SILUETA) */
+/* Aplicamos esto al contenedor de la carta cuando NO está revelada */
+.card-hidden .name, 
+.card-hidden .info,
+.card-hidden .stats {
+  filter: blur(8px);
+  opacity: 0.3;
+  pointer-events: none; /* No interaction */
+}
+
+.card-hidden .avatar img {
+  filter: brightness(0) contrast(0); /* Silueta negra perfecta */
+  opacity: 0.6;
+  transition: all 0.5s;
+}
+
+/* PISTAS */
+.hints-section {
   width: 100%;
-  animation: fadeIn 0.5s;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hint-badge {
+  background: var(--pk-blue);
+  color: white;
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(60, 90, 166, 0.3);
+  animation: popIn 0.3s ease;
 }
 
 .hint-btn {
-  background: #ffcc00;
-  color: #000;
-  border: 2px solid #bba100;
-  padding: 0.6rem 1.2rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
+  background: white;
+  border: 2px dashed #ccc;
+  color: #555;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
   cursor: pointer;
+  font-weight: 700;
   transition: all 0.2s;
-  margin-top: 0.5rem;
-  display: inline-block;
-  /* Force display */
-  z-index: 50;
 }
 
 .hint-btn:hover {
-  background: #ffd700;
-  transform: scale(1.05);
+  border-color: var(--pk-yellow);
+  color: var(--pk-yellow);
+  background: #fff;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.lives-display {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-  background: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem 1.5rem;
-  border-radius: 20px;
-  border: 1px solid #ff4444;
-}
-
-.lives-subtitle {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #ffd700;
-}
-
-.config-summary {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
+/* =========================================
+   OVERLAYS
+   ========================================= */
+.victory-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  border: 1px solid #777;
-  font-size: 0.9rem;
-  color: #ddd;
+  z-index: 1000;
+  color: white;
+  text-align: center;
 }
 
-.config-summary span strong {
-  color: #4f9;
+.victory-overlay h1 { font-size: 4rem; margin-bottom: 1rem; color: var(--pk-green); }
+.victory-overlay.gameover h1 { color: var(--pk-red); }
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }

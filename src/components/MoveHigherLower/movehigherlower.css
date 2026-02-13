@@ -56,7 +56,7 @@ body {
 
 .game-area {
   width: 100%;
-  max-width: 75rem;
+  max-width: 90vw; 
   display: flex;
   flex-direction: column;
   align-items: center;

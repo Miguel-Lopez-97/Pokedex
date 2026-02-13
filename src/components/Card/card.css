@@ -1,135 +1,229 @@
+/* =========================================
+   RESET & BASE
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+/* =========================================
+   TARJETA PRINCIPAL
+   ========================================= */
 .card,
 .card-hidden {
-  -moz-border-radius: 10vh;
-  -ms-border-radius: 10vh;
-  -o-border-radius: 10vh;
-  -webkit-border-radius: 10vh;
   align-items: center;
-  border-radius: 5vh;
+  border-radius: 2rem;
   display: flex;
   flex-direction: column;
   height: auto;
-  margin: 5vh;
+  margin: 2rem;
   width: 20vw;
-  padding: 1vw;
+  min-width: 280px;
+  padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden; /* Mantiene todo contenido */
 }
 
+/* Estilo para carta oculta/trasera */
 .card.hidden-card-style {
   background: #2a2a2a !important;
-  border: 2px solid #444;
-  box-shadow: none;
+  border: 4px solid #444;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 
+/* --- HOVER EFFECT --- */
 .card:hover {
-  box-shadow: 0 0 20px #4f9;
-  filter: brightness(1.2);
-  -webkit-filter: brightness(1.2);
-  transition: all 0.5s;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  -o-transition: all 0.5s;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 0 15px rgba(255, 255, 255, 0.2);
+  z-index: 10;
 }
 
+/* =========================================
+   SECCIONES: NAME & INFO
+   ========================================= */
 .name,
 .info {
-  align-items: center;
-  color: black;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  font-weight: bold;
-  height: auto;
-  width: 100%;
-  min-width: 250px;
+  align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10vh;
-  -webkit-border-radius: 10vh;
-  -moz-border-radius: 10vh;
-  -ms-border-radius: 10vh;
-  -o-border-radius: 10vh;
+  
+  /* Glassmorphism mejorado para legibilidad */
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  padding: 0.5rem 1rem;
+}
+
+.name {
+  margin-bottom: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.name h1 {
+  color: #222;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.name h2 {
+  color: #111;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Clase nueva para reemplazar estilo inline de región */
+.region-name {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
 .info {
-  min-height: 20vh;
-  padding-top: 1vw;
-  padding-bottom: 1vw;
+  margin-top: auto; /* Empuja hacia abajo */
+  padding: 1.2rem;
+  min-height: 100px;
 }
 
+.info h3 {
+  font-size: 0.85rem;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 0.2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.info p {
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0.2rem 0;
+  text-transform: capitalize;
+}
+
+/* =========================================
+   AVATAR (SHINY SWAP LOGIC)
+   ========================================= */
 .avatar {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.15); /* Fondo sutil detrás del pokemon */
+  border-radius: 50%; /* Círculo perfecto detrás */
+  width: 180px;
+  height: 180px;
   display: flex;
-  height: 20vh;
-  justify-content: space-evenly;
-  width: 90%;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  position: relative; /* Necesario para absolute positioning de las img */
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
 }
 
 .avatar img {
-  height: 60px;
-  width: 50%;
+  height: 140px; /* Tamaño generoso */
+  width: auto;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
 }
 
-.avatar img:hover {
-  animation-name: rote;
-  animation-duration: 0.3s;
-  animation-iteration-count: infinite;
-  -webkit-transform: scale(5);
-  -moz-transform: scale(5);
-  -ms-transform: scale(5);
-  -o-transform: scale(5);
+/* Lógica de Swap: Normal visible por defecto */
+.sprite-normal {
+  opacity: 1;
+  transform: scale(1);
+  position: absolute; /* Para que ocupen el mismo espacio */
 }
 
+/* Lógica de Swap: Shiny invisible por defecto */
+.sprite-shiny {
+  opacity: 0;
+  transform: scale(0.8);
+  position: absolute;
+}
+
+/* AL HACER HOVER EN LA TARJETA */
+/* Si existe shiny (la clase has-shiny en el padre), hacemos el cambio */
+.avatar.has-shiny:hover .sprite-normal {
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+}
+
+.avatar.has-shiny:hover .sprite-shiny {
+  opacity: 1;
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Si NO hay shiny (solo normal), hacemos un zoom simple */
+.avatar:not(.has-shiny):hover .sprite-normal {
+  transform: scale(1.15);
+}
+
+/* Placeholder para carta oculta "?" */
+.unknown-avatar {
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.2);
+}
+
+/* =========================================
+   STATS DISPLAY
+   ========================================= */
 .stats {
-  min-width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2vw;
-  margin-top: 1vw;
-  border-radius: 500%;
-  -webkit-border-radius: 500%;
-  -moz-border-radius: 500%;
-  -ms-border-radius: 500%;
-  -o-border-radius: 500%;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 1rem;
+  
+  /* Fondo oscuro semitransparente para alto contraste */
+  background-color: rgba(20, 20, 20, 0.75); 
+  padding: 1rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .statsP {
   color: whitesmoke;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
 }
 
-@keyframes rote {
-  0% {
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(5deg);
-    -webkit-transform: rotate(5deg);
-    -moz-transform: rotate(5deg);
-    -ms-transform: rotate(5deg);
-    -o-transform: rotate(5deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-  }
+/* ESTADÍSTICA PERSONALIZADA (Higher/Lower) */
+.custom-stat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
 }
 
-.name h1 {
-  color: black;
+.custom-stat-pill {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222;
+  background: rgba(255, 255, 255, 0.85); /* Fondo muy legible */
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-transform: uppercase;
   text-align: center;
 }
