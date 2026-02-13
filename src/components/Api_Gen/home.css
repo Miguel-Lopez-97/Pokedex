@@ -1,305 +1,404 @@
+/* =========================================
+   HOME - VARIABLES & LAYOUT
+   ========================================= */
+:root {
+  --pk-blue: #3c5aa6;
+  --pk-yellow: #ffcb05;
+  --bg-dark: #222;
+  --text-dark: #333;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --radius: 1.5rem;
+}
+
 .home-container {
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px; /* Ancho máximo para pantallas ultra-wide */
+  margin: 0 auto;
 }
 
 .home-title {
-    text-align: center;
-    color: #faca04;
-    text-shadow: 2px 2px #3c5aa6;
-    margin-bottom: 10px;
+  text-align: center;
+  color: var(--pk-blue);
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 var(--pk-yellow);
 }
 
-/* Force card inside slot to fit perfectly */
-.team-slot .card {
-    margin: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 4vh !important;
-    /* Slightly less than slot radius */
-    box-shadow: none !important;
-}
-
+/* =========================================
+   WELCOME / INFO SECTION
+   ========================================= */
 .welcome-section {
-    text-align: center;
-    margin: 0 20px 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    max-width: 800px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 0 0 2rem 0;
+  padding: 1.5rem 3rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid var(--pk-blue);
+  max-width: 800px;
 }
 
 .welcome-text {
-    font-size: 1rem;
-    color: #333;
-    margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1rem;
 }
 
 .welcome-list {
-    text-align: left;
-    display: inline-block;
-    margin: 0;
-    color: #555;
-    font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
 }
 
+.welcome-list li {
+  font-size: 0.9rem;
+  color: #666;
+  background: #f4f6f9;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+/* =========================================
+   CONTROL PANEL (FILTERS & ACTIONS)
+   ========================================= */
 .home-setup-form {
-    margin-top: 0;
-    margin-bottom: 30px;
-    width: auto;
-    min-width: 300px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 3rem;
+  width: 100%;
+  max-width: 90vw
 }
 
 .home-form-group {
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.home-form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
 }
 
 .gen-select {
-    display: block;
-    width: 100%;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  border: 2px solid #eee;
+  background-color: #fafafa;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
 }
 
-.reset-team-btn {
-    background: #ff4444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
-}
+.gen-select:focus { border-color: var(--pk-blue); background: white; }
 
-.minimalist-btn {
-    border: 1px solid #777;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
-}
-
+/* Action Buttons Container */
 .action-buttons-container {
-    display: flex;
-    gap: 10px;
-    width: 100%;
+  display: flex;
+  gap: 1rem;
+  flex: 2;
 }
 
-.analyze-btn {
-    flex: 1;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 1rem;
+/* Base Button Styles */
+.action-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.8rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
 }
 
-.share-team-btn {
-    background: #333;
-    color: white;
-    border: 1px solid #777;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 1rem;
-}
+.action-btn:active { transform: translateY(2px); }
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
+.btn-reset { background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; }
+.btn-reset:hover { background: #ffcdd2; }
+
+.btn-mode { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
+.btn-mode:hover { background: #bbdefb; }
+
+.btn-analyze { 
+  background: var(--pk-yellow); 
+  color: #333; 
+  flex: 2; 
+  box-shadow: 0 4px 0 #c7a008;
+}
+.btn-analyze:hover { filter: brightness(1.05); }
+.btn-analyze:active { box-shadow: none; transform: translateY(4px); }
+
+.btn-share { 
+  background: #333; 
+  color: white; 
+  flex: 1;
+  box-shadow: 0 4px 0 #000;
+}
+.btn-share:active { box-shadow: none; transform: translateY(4px); }
+
+/* =========================================
+   TEAM GRID (18 SLOTS)
+   ========================================= */
 .team-grid {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  /* Grid responsiva automática: mínimo 280px por carta, máximo lo que quepa */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  padding: 1rem;
 }
 
+/* Individual Slot Wrapper */
 .team-slot {
-    border-radius: 5vh;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    margin: 2vh;
-    width: 23vw;
-    padding: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.2s;
-    justify-content: center;
+  /* La magia de las variables CSS: El color viene del JSX */
+  border: 3px solid var(--slot-color, #ccc);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 2rem;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.team-slot-filled {
-    justify-content: flex-start;
+.team-slot:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
+/* Etiqueta de Tipo */
 .slot-type-label {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    z-index: 10;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--slot-color);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  z-index: 20;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.remove-btn {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    transition: opacity 0.2s;
-}
-
+/* Estado Vacío */
 .empty-slot-content {
-    color: white;
-    text-align: center;
-    opacity: 0.7;
-    margin-top: 50px;
+  color: var(--slot-color);
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.4);
+  border-radius: 1.8rem;
+  transition: background 0.2s;
 }
 
-.plus-sign {
-    font-size: 3rem;
+.empty-slot-content:hover {
+  background: rgba(255,255,255,0.8);
 }
 
-/* Modal Styles */
+.plus-sign { font-size: 4rem; line-height: 1; font-weight: 300; }
+.empty-slot-content p { font-weight: 700; text-transform: uppercase; margin-top: 0.5rem; }
+
+/* Estado Lleno (Wrapper de la Card) */
+.slot-card-wrapper {
+  width: 100%;
+  height: 100%;
+  /* Forzamos que la carta se comporte bien dentro del slot */
+  transform: scale(0.95);
+  transform-origin: center;
+}
+
+/* Sobreescribimos ligeramente la carta genérica para que encaje aquí */
+.slot-card-wrapper .card {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-shadow: none !important; /* El slot ya tiene sombra */
+  border: none !important;
+}
+
+/* Botón Eliminar */
+.remove-btn {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #ff4444;
+  color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.remove-btn:hover { transform: scale(1.1); background: #d32f2f; }
+
+/* =========================================
+   MODAL (SELECCIÓN DE POKEMON)
+   ========================================= */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.85);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
 .type-modal-content {
-    background: #222;
-    width: 100%;
-    max-width: 600px;
-    height: 80vh;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
+  background: #f9f9f9;
+  width: 100%;
+  max-width: 800px;
+  height: 85vh;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  /* El borde de color viene inline del JS */
 }
 
 .modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #444;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.modal-header h2 {
-    color: white;
-    margin: 0;
-}
+.modal-header h2 { margin: 0; color: #333; text-transform: capitalize; }
 
 .close-modal-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
+  background: #f0f0f0;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
+.close-modal-btn:hover { background: #ff4444; color: white; }
 
 .modal-search-container {
-    padding: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .modal-search-input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 1rem;
-    background-color: #333;
-    color: white;
+  flex: 1;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: 2px solid #eee;
+  font-size: 1rem;
+  outline: none;
 }
+.modal-search-input:focus { border-color: var(--pk-blue); }
 
+/* Shiny Checkbox Custom */
 .shiny-toggle {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: white;
-    background: #333;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #eee;
+  padding: 0.5rem 1rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  user-select: none;
 }
+.shiny-toggle input { width: 1.2rem; height: 1.2rem; cursor: pointer; }
 
-.shiny-toggle label {
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.shiny-checkbox {
-    transform: scale(1.5);
-    cursor: pointer;
-}
-
+/* Grid de Selección */
 .pokemon-list-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 20px 20px;
-}
-
-.loading-text {
-    color: white;
-    text-align: center;
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: #f4f4f4;
 }
 
 .pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
 }
 
 .pokemon-item {
-    background: #333;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    text-transform: capitalize;
-    border: 1px solid transparent;
-    transition: all 0.2s;
+  background: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: center;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s;
 }
 
-.no-matches {
-    color: #aaa;
-    grid-column: 1 / -1;
-    text-align: center;
+.pokemon-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  /* Border color applied inline via JS for type color */
+}
+
+.no-matches, .loading-text {
+  text-align: center;
+  color: #777;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  width: 100%;
 }
