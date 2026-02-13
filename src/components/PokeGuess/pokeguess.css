@@ -8,58 +8,114 @@
     min-height: 90vh;
 }
 
+/* Clean Light Theme for PokeGuess */
 .setup-form {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     width: 100%;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .setup-form h1 {
     text-align: center;
-    color: #444;
-    margin-bottom: 20px;
+    color: #3c5aa6;
+    text-shadow: none;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #faca04;
+    padding-bottom: 10px;
+    display: inline-block;
+    align-self: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 10px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
     font-weight: bold;
-    color: #666;
+    color: #444;
+    font-size: 1.1rem;
 }
 
 .form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid #ddd;
+    background: #f9f9f9;
+    color: #333;
     font-size: 1rem;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.form-group select:focus {
+    border-color: #3c5aa6;
+    outline: none;
+    background: white;
 }
 
 .start-btn {
-    width: 100%;
-    padding: 12px;
+    padding: 1.2rem;
     background: #ffcb05;
     /* Pokemon Yellow */
-    border: none;
-    border-radius: 5px;
-    color: #3b4cca;
+    color: #2a407a;
     /* Pokemon Blue */
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 0.8rem;
     cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
 }
 
 .start-btn:hover {
-    background: #fae017;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: #faca04;
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+/* Instructions adjustment */
+.game-instructions {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: left;
+    background: #f0f4f8 !important;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #3c5aa6;
+}
+
+.game-instructions h3 {
+    margin-top: 0;
+    color: #2a407a !important;
+}
+
+.instructions-list {
+    padding-left: 20px;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .game-board {
@@ -106,6 +162,16 @@
     background-color: #f44336;
 }
 
+/* Shiny toggle dynamic colors handling via separate classes or inline in React, keeping base here */
+.btn-shiny-on {
+    background-color: #e91e63;
+}
+
+.btn-shiny-off {
+    background-color: #3f51b5;
+}
+
+
 .cards-grid {
     display: flex;
     flex-wrap: wrap;
@@ -126,7 +192,6 @@
     position: relative;
     border: 3px solid transparent;
     width: 180px;
-    /* Fixed width for flexbox */
     margin: 10px;
 }
 
@@ -213,14 +278,15 @@
 
 .instructions {
     margin-top: 30px;
-    background: #f9f9f9;
+    background: #e3f2fd;
+    /* Light Blue */
     padding: 15px;
     border-radius: 10px;
     max-width: 600px;
     text-align: center;
     font-size: 0.9rem;
     color: #555;
-    border: 1px solid #ddd;
+    border: 1px solid #2196f3;
 }
 
 .overlay {
@@ -238,13 +304,59 @@
     z-index: 10000;
     margin: 0;
     padding: 0;
-    transform: revert-layer;
 }
 
 .modal-content {
     animation: popIn 0.3s ease-out;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
+.modal-content.victory {
+    padding: 40px;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-win-yes {
+    background: #4caf50;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.btn-win-no {
+    background: #f44336;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
+
+.victory-title {
+    color: #ffcb05;
+    text-shadow: 2px 2px #3b4cca;
+    font-size: 3rem;
+    margin: 0;
+}
+
+.victory-text {
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+.btn-new-game {
+    margin-top: 10px;
+    background: #3b4cca;
+    color: white;
+}
+
+/* Animation */
 @keyframes popIn {
     from {
         transform: scale(0.8);

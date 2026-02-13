@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../header/Nav/navigation.css";
+import "./home.css";
 import { PokemonIndividual } from "../Card/card";
 import { TeamAnalysis } from "../Analysis/TeamAnalysis"; // Import Analysis
 import "../Trivia/trivia.css";
@@ -141,7 +142,6 @@ export function Home() {
   }
 
   // Share Team Feature
-  // Share Team Feature
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const teamParam = params.get("team");
@@ -242,83 +242,58 @@ export function Home() {
   });
 
   return (
-    <div style={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <style>
-        {`
-            /* Force card inside slot to fit perfectly */
-            .team-slot .card {
-                margin: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                border-radius: 4vh !important; /* Slightly less than slot radius */
-                box-shadow: none !important;
-            }
-        `}
-      </style>
-      <h1 style={{ textAlign: 'center', color: '#faca04', textShadow: '2px 2px #3c5aa6', marginBottom: '30px' }}>
+    <div className="home-container">
+      <h1 className="home-title">
         Ultimate Type Team
       </h1>
 
-      <div className="setup-form" style={{ marginTop: '0', marginBottom: '30px', width: 'auto', minWidth: '300px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-        <div className="form-group" style={{ width: '100%' }}>
+      <div className="welcome-section">
+        <p className="welcome-text">
+          <strong>Build your dream Pokémon team!</strong> Select a slot to search for Pokémon.
+        </p>
+        <ul className="welcome-list">
+          <li>✨ <strong>Filters</strong>: Use the dropdown to filter by Generation.</li>
+          <li>⚔️ <strong>Analyze</strong>: Check your team's coverage once you have 18 members.</li>
+          <li>📤 <strong>Share</strong>: Get a link to share your team with friends.</li>
+        </ul>
+      </div>
+
+      <div className="home-setup-form">
+        <div className="home-form-group">
           <label>Generation Filter</label>
           <select
             value={genFilter}
             onChange={(e) => setGenFilter(e.target.value)}
-            style={{ display: 'block', width: '100%' }}
+            className="gen-select"
           >
             {GENERATIONS.map(gen => <option key={gen.name} value={gen.name}>{gen.name}</option>)}
           </select>
         </div>
 
-        <button
-          onClick={handleReset}
-          style={{
-            background: '#ff4444',
-            color: 'white',
-            border: 'none',
-            padding: '10px 20px',
-            borderRadius: '8px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            width: '100%'
-          }}
-        >
+        <button onClick={handleReset} className="reset-team-btn">
           Reset Team
         </button>
 
         <button
           onClick={() => setIsMinimalist(!isMinimalist)}
+          className="minimalist-btn"
           style={{
             background: isMinimalist ? '#eee' : '#333',
             color: isMinimalist ? '#333' : 'white',
-            border: '1px solid #777',
-            padding: '10px 20px',
-            borderRadius: '8px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            width: '100%'
           }}
         >
           {isMinimalist ? "Show Details Mode" : "Minimalist Mode"}
         </button>
 
-        <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
+        <div className="action-buttons-container">
           <button
             onClick={() => setShowAnalysis(true)}
             disabled={Object.keys(team).length < 18}
+            className="analyze-btn"
             style={{
-              flex: 1,
               background: Object.keys(team).length === 18 ? '#faca04' : '#555',
               color: Object.keys(team).length === 18 ? '#222' : '#aaa',
-              border: 'none',
-              padding: '10px',
-              borderRadius: '8px',
-              fontWeight: 'bold',
               cursor: Object.keys(team).length === 18 ? 'pointer' : 'not-allowed',
-              fontSize: '1rem',
               opacity: Object.keys(team).length === 18 ? 1 : 0.6
             }}
           >
@@ -328,15 +303,9 @@ export function Home() {
           <button
             onClick={handleShare}
             disabled={Object.keys(team).length === 0}
+            className="share-team-btn"
             style={{
-              background: '#333',
-              color: 'white',
-              border: '1px solid #777',
-              padding: '10px',
-              borderRadius: '8px',
-              fontWeight: 'bold',
               cursor: Object.keys(team).length > 0 ? 'pointer' : 'not-allowed',
-              fontSize: '1rem',
               opacity: Object.keys(team).length > 0 ? 1 : 0.6
             }}
             title="Share Team URL"
@@ -348,14 +317,7 @@ export function Home() {
 
       <TeamAnalysis team={team} isOpen={showAnalysis} onClose={() => setShowAnalysis(false)} />
 
-      <div className="team-grid" style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
+      <div className="team-grid">
         {TYPES.map(type => {
           const member = team[type];
           return (
@@ -364,35 +326,12 @@ export function Home() {
               onClick={() => openTypeModal(type)}
               onMouseEnter={() => setHoveredSlot(type)}
               onMouseLeave={() => setHoveredSlot(null)}
+              className={`team-slot ${member ? 'team-slot-filled' : ''}`}
               style={{
-                borderRadius: '5vh',
                 border: `3px solid ${typeColors[type]}`,
-                alignItems: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                height: 'auto',
-                margin: '2vh', // Reduced margin between slots
-                width: '23vw',
-                padding: '0', // REMOVED padding
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                cursor: 'pointer',
-                position: 'relative',
-                transition: 'transform 0.2s',
-                justifyContent: member ? 'flex-start' : 'center',
               }}
-              className="team-slot"
             >
-              <div style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                background: typeColors[type],
-                color: 'white',
-                padding: '5px 10px',
-                borderRadius: '20px',
-                fontWeight: 'bold',
-                zIndex: 10
-              }}>
+              <div className="slot-type-label" style={{ background: typeColors[type] }}>
                 {type}
               </div>
 
@@ -402,23 +341,7 @@ export function Home() {
                     onClick={(e) => handleRemove(e, type)}
                     className="remove-btn"
                     style={{
-                      position: 'absolute',
-                      top: '10px',
-                      left: '10px',
-                      background: '#ff4444',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '30px',
-                      height: '30px',
-                      cursor: 'pointer',
-                      zIndex: 100,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      fontWeight: 'bold',
-                      opacity: hoveredSlot === type ? 1 : 0, // Only show on hover
-                      transition: 'opacity 0.2s'
+                      opacity: hoveredSlot === type ? 1 : 0,
                     }}
                   >X</button>
                   <div style={{ transform: 'scale(1)', marginTop: '0', width: '100%', height: '100%' }}>
@@ -426,8 +349,8 @@ export function Home() {
                   </div>
                 </>
               ) : (
-                <div style={{ color: 'white', textAlign: 'center', opacity: 0.7, marginTop: '50px' }}>
-                  <span style={{ fontSize: '3rem' }}>+</span>
+                <div className="empty-slot-content">
+                  <span className="plus-sign">+</span>
                   <p>Select {type}</p>
                 </div>
               )}
@@ -437,93 +360,45 @@ export function Home() {
       </div>
 
       {modalOpen && (
-        <div style={{
-          position: 'fixed',
-          top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.85)',
-          zIndex: 1000,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px'
-        }}>
-          <div style={{
-            background: '#222',
-            width: '100%',
-            maxWidth: '600px',
-            height: '80vh',
-            borderRadius: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            border: `2px solid ${typeColors[selectedType]}`
-          }}>
-            <div style={{ padding: '20px', borderBottom: '1px solid #444', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ color: 'white', margin: 0 }}>Select {selectedType} Pokémon</h2>
-              <button
-                onClick={() => setModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}
-              >✕</button>
+        <div className="modal-overlay">
+          <div className="type-modal-content" style={{ border: `2px solid ${typeColors[selectedType]}` }}>
+            <div className="modal-header">
+              <h2>Select {selectedType} Pokémon</h2>
+              <button onClick={() => setModalOpen(false)} className="close-modal-btn">✕</button>
             </div>
 
-            <div style={{ padding: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div className="modal-search-container">
               <input
                 type="text"
                 placeholder="Search Pokémon..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  fontSize: '1rem',
-                  backgroundColor: '#333',
-                  color: 'white'
-                }}
+                className="modal-search-input"
               />
               <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  color: 'white',
-                  background: '#333',
-                  padding: '10px',
-                  borderRadius: '8px',
-                  cursor: 'pointer'
-                }}
+                className="shiny-toggle"
                 onClick={() => setIsShiny(!isShiny)}
               >
-                <label style={{ cursor: 'pointer', fontWeight: 'bold' }}>Shiny?</label>
+                <label>Shiny?</label>
                 <input
                   type="checkbox"
                   checked={isShiny}
                   onChange={() => setIsShiny(!isShiny)}
-                  style={{ transform: 'scale(1.5)', cursor: 'pointer' }}
+                  className="shiny-checkbox"
                 />
               </div>
             </div>
 
-            <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px 20px' }}>
+            <div className="pokemon-list-container">
               {loading ? (
-                <p style={{ color: 'white', textAlign: 'center' }}>Loading...</p>
+                <p className="loading-text">Loading...</p>
               ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+                <div className="pokemon-grid">
                   {filteredPokemon.map(p => (
                     <div
                       key={p.name}
                       onClick={() => handleSelectPokemon(p.url)}
-                      style={{
-                        background: '#333',
-                        padding: '10px',
-                        borderRadius: '8px',
-                        textAlign: 'center',
-                        color: 'white',
-                        cursor: 'pointer',
-                        textTransform: 'capitalize',
-                        border: '1px solid transparent',
-                        transition: 'all 0.2s'
-                      }}
+                      className="pokemon-item"
                       onMouseEnter={e => e.currentTarget.style.borderColor = typeColors[selectedType]}
                       onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
                     >
@@ -531,7 +406,7 @@ export function Home() {
                     </div>
                   ))}
                   {filteredPokemon.length === 0 && !loading && (
-                    <p style={{ color: '#aaa', gridColumn: '1/-1', textAlign: 'center' }}>
+                    <p className="no-matches">
                       No matches found {genFilter !== "All Generations" ? `in ${genFilter}` : ""}
                     </p>
                   )}

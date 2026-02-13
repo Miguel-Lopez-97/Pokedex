@@ -296,6 +296,16 @@ export function TriviaGame() {
                 <form className="setup-form" onSubmit={handleStartGame}>
                     <h1>Configure Trivia Game</h1>
 
+                    <div className="instructions-box">
+                        <h3>How to Play</h3>
+                        <p>Test your knowledge by revealing hints in order:</p>
+                        <ol className="instructions-list">
+                            <li><strong>Guess</strong>: Try to name the Pokémon first!</li>
+                            <li><strong>Reveal</strong>: Use lives to reveal Type, Ability, or Category.</li>
+                            <li><strong>Rank</strong>: Compete to find the top Pokémon in your selected category.</li>
+                        </ol>
+                    </div>
+
                     <div className="form-group">
                         <label>Generation</label>
                         <select value={filters.genUrl} onChange={e => setFilters({ ...filters, genUrl: e.target.value })}>
@@ -353,7 +363,7 @@ export function TriviaGame() {
                     </div>
 
                     <div className="form-group">
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                        <label className="checkbox-label">
                             <input
                                 type="checkbox"
                                 checked={filters.includeAltForms}
@@ -372,8 +382,7 @@ export function TriviaGame() {
             {(gameState === "playing" || gameState === "victory" || gameState === "gameover") && (
                 <div className="game-area">
                     <button
-                        className="reset-btn"
-                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                        className="reconfigure-btn"
                         onClick={() => setGameState("setup")}
                     >
                         Reconfigure
@@ -387,7 +396,7 @@ export function TriviaGame() {
 
                     <div className="lives-display">
                         <h2>Lives: {Array(lives).fill('❤️').join('')} ({lives}/{maxLives})</h2>
-                        <h3 style={{ marginTop: '0.5rem', fontSize: '1rem', color: '#ffd700' }}>
+                        <h3 className="lives-subtitle">
                             Found: {revealedIds.length} / {gameData.length}
                         </h3>
                     </div>
@@ -413,8 +422,8 @@ export function TriviaGame() {
 
 
                     {gameState === "gameover" && (
-                        <div className="victory-message" style={{ borderColor: '#ff4444', boxShadow: '0 0 50px rgba(255, 68, 68, 0.5)' }}>
-                            <h1 style={{ color: '#ff4444' }}>💀 Game Over 💀</h1>
+                        <div className="victory-message gameover">
+                            <h1>💀 Game Over 💀</h1>
                             <p>You ran out of lives!</p>
                             <button className="reset-btn" onClick={() => setGameState("setup")}>Try Again</button>
                         </div>
@@ -478,14 +487,13 @@ export function TriviaGame() {
                                         customStat={displayedStat}
                                     />
                                     {!isRevealed && p.hints && (
-                                        <div className="hints-section" style={{ display: 'flex', marginTop: '10px', zIndex: 100 }}>
+                                        <div className="hints-section">
                                             {p.hints.slice(0, revealedHints[p.id] || 0).map((hint, index) => (
                                                 <div key={index} className="hint-text">💡 {hint}</div>
                                             ))}
                                             {(revealedHints[p.id] || 0) < 3 && (
                                                 <button
                                                     className="hint-btn"
-                                                    style={{ display: 'inline-block' }}
                                                     onClick={() => handleRevealHint(p.id)}
                                                 >
                                                     Reveal Hint (-1 ❤️)

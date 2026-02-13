@@ -8,6 +8,119 @@
     min-height: 80vh;
 }
 
+/* Setup Form - Clean Light Theme */
+.setup-form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    margin-bottom: 2rem;
+}
+
+.setup-form h1 {
+    text-align: center;
+    color: #3c5aa6;
+    text-shadow: none;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #faca04;
+    padding-bottom: 10px;
+    display: inline-block;
+    align-self: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #444;
+    font-size: 1.1rem;
+}
+
+.form-group select,
+.form-group input {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid #ddd;
+    background: #f9f9f9;
+    color: #333;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: #3c5aa6;
+    outline: none;
+    background: white;
+}
+
+.start-btn {
+    padding: 1.2rem;
+    background: #ffcb05;
+    color: #2a407a;
+    font-weight: 800;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: #faca04;
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+/* Instructions Box */
+.instructions-box {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: left;
+    background: #f0f4f8;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #3c5aa6;
+}
+
+.instructions-box h3 {
+    margin-top: 0;
+    color: #2a407a;
+}
+
+.instructions-list {
+    padding-left: 20px;
+    margin: 10px 0;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .move-card {
     background: white;
     border-radius: 15px;
@@ -30,6 +143,8 @@
 
 .move-card.right-card {
     border-color: #2196f3;
+    position: relative;
+    /* Moved from inline */
 }
 
 .move-name {
@@ -55,6 +170,16 @@
     margin-bottom: 20px;
 }
 
+.move-flavor {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin: 5px 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .move-stat-display {
     display: flex;
     flex-direction: column;
@@ -77,12 +202,48 @@
     letter-spacing: 1px;
 }
 
-/* Reuse game area styles from HigherLower or define here */
+.game-area {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.reset-btn {
+    align-self: flex-end;
+    margin-right: 10%;
+    margin-bottom: 1rem;
+    background: #555;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reset-btn:hover {
+    background: #333;
+}
+
+.score-board {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    display: flex;
+    gap: 2rem;
+    font-size: 1.5rem;
+    border: 2px solid #faca04;
+    color: white;
+}
+
 .cards-container {
     display: flex;
     align-items: center;
     gap: 30px;
-    /* Reduced gap to fit controls */
     margin-top: 50px;
     position: relative;
     flex-wrap: wrap;
@@ -103,7 +264,6 @@
     z-index: 10;
 }
 
-/* New Side Controls */
 .controls-side {
     display: flex;
     flex-direction: column;
@@ -133,6 +293,11 @@
     color: white;
 }
 
+.btn-equal {
+    background: #FFD700;
+    color: #333;
+}
+
 .btn-equal:hover {
     background-color: #e6c200;
 }
@@ -142,7 +307,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Category Icons/Colors if needed */
+.move-info {
+    width: 100%;
+}
+
+.move-info-hidden {
+    opacity: 0.3;
+}
+
+/* Category Colors */
 .category-physical {
     background-color: #c92112;
     color: white;
@@ -164,6 +337,70 @@
     border-radius: 4px;
 }
 
-.move-info {
-    width: 100%;
+/* Results */
+.result-feedback {
+    position: absolute;
+    z-index: 100;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px white;
+    top: 40%;
+}
+
+.result-correct {
+    color: #4caf50;
+}
+
+.result-wrong {
+    color: #ff4444;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.overlay-title-gameover {
+    color: #ff4444;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.overlay p {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.overlay-details {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.overlay-text-small {
+    font-size: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.overlay button {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    background: #faca04;
+    color: #3c5aa6;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: bold;
 }

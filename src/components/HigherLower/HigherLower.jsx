@@ -230,6 +230,16 @@ export function HigherLower() {
                 <form className="setup-form" onSubmit={startGame}>
                     <h1>Higher or Lower?</h1>
 
+                    <div className="instructions-box">
+                        <h3>How to Play</h3>
+                        <p>Guess if the <strong>Hidden Pokémon</strong> has a Higher or Lower value for the selected stat than the shown Pokémon.</p>
+                        <ul className="instructions-list">
+                            <li><strong>Total Base Stats</strong>: Sum of all stats.</li>
+                            <li><strong>HP/Attack/Defense</strong>: Standard battle stats.</li>
+                            <li><strong>Weight/Height</strong>: Physical dimensions.</li>
+                        </ul>
+                    </div>
+
                     <div className="form-group">
                         <label>Generation</label>
                         <select
@@ -271,6 +281,7 @@ export function HigherLower() {
                     </div>
 
                     <button type="submit" className="start-btn">Start Game</button>
+                    {/* Duplicate Instructions removed */}
                 </form>
             )}
 
@@ -280,7 +291,6 @@ export function HigherLower() {
                 <div className="game-area">
                     <button
                         className="reset-btn"
-                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                         onClick={() => setGameState("setup")}
                     >
                         Reconfigure
@@ -319,14 +329,7 @@ export function HigherLower() {
                         <div className={`card-wrapper right-card`}>
                             {/* Controls Overlay if playing */}
                             {gameState === "playing" && !resultMsg && (
-                                <div className="controls" style={{
-                                    position: 'absolute',
-                                    zIndex: 50,
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: '80%'
-                                }}>
+                                <div className="controls">
                                     <button className="guess-btn btn-higher" onClick={() => handleGuess('higher')}>
                                         Higher ▲
                                     </button>
@@ -366,25 +369,17 @@ export function HigherLower() {
                     </div>
 
                     {resultMsg && (
-                        <div style={{
-                            position: 'absolute',
-                            zIndex: 100,
-                            fontSize: '3rem',
-                            fontWeight: 'bold',
-                            color: resultMsg === "Correct!" ? '#4caf50' : '#ff4444',
-                            textShadow: '2px 2px 5px black',
-                            top: '40%'
-                        }}>
+                        <div className={`result-feedback ${resultMsg === "Correct!" ? "result-correct" : "result-wrong"}`}>
                             {resultMsg}
                         </div>
                     )}
 
                     {gameState === "gameover" && (
                         <div className="overlay">
-                            <h1 style={{ color: '#ff4444' }}>Game Over</h1>
+                            <h1 className="overlay-title-gameover">Game Over</h1>
                             <p>You scored {currentScore}!</p>
-                            <div style={{ display: 'flex', gap: '10px', flexDirection: 'column', alignItems: 'center' }}>
-                                <p style={{ fontSize: '1rem' }}>The {getStatLabel()} of {rightPokemon.name} was {getStatValue(rightPokemon)}</p>
+                            <div className="overlay-details">
+                                <p className="overlay-text-small">The {getStatLabel()} of {rightPokemon.name} was {getStatValue(rightPokemon)}</p>
                                 <button onClick={() => setGameState("setup")}>Try Again</button>
                             </div>
                         </div>

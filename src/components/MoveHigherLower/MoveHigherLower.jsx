@@ -231,7 +231,15 @@ export function MoveHigherLower() {
                 <form className="setup-form" onSubmit={startGame}>
                     <h1>Move Higher Lower</h1>
 
-
+                    <div className="instructions-box">
+                        <h3>How to Play</h3>
+                        <p>Guess if the <strong>Hidden Move</strong> has a Higher or Lower Power/Accuracy/PP.</p>
+                        <ul className="instructions-list">
+                            <li><strong>Power</strong>: Damage potential.</li>
+                            <li><strong>Accuracy</strong>: Hit chance.</li>
+                            <li><strong>PP</strong>: Usage count.</li>
+                        </ul>
+                    </div>
 
                     <div className="form-group">
                         <label>Type</label>
@@ -262,9 +270,7 @@ export function MoveHigherLower() {
                     </div>
 
                     <button type="submit" className="start-btn">Start Game</button>
-                    <p style={{ marginTop: '10px', fontSize: '0.9rem', color: '#666' }}>
-                        Guess if the next move has Higher or Lower {getStatLabel()}!
-                    </p>
+                    {/* Duplicate Instructions removed */}
                 </form>
             )}
 
@@ -274,7 +280,6 @@ export function MoveHigherLower() {
                 <div className="game-area">
                     <button
                         className="reset-btn"
-                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                         onClick={() => setGameState("setup")}
                     >
                         Reconfigure
@@ -290,7 +295,7 @@ export function MoveHigherLower() {
                                 <div className="move-name">{leftMove.name}</div>
                                 <div className="move-type" data-type={leftMove.type}>{leftMove.type}</div>
                                 <div className={`category-${leftMove.category} move-category`}>{leftMove.category}</div>
-                                <div style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: '5px 0', minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div className="move-flavor">
                                     "{leftMove.flavor}"
                                 </div>
                             </div>
@@ -304,12 +309,12 @@ export function MoveHigherLower() {
                         <div className="vs-circle">VS</div>
 
                         {/* RIGHT CARD */}
-                        <div className="move-card right-card" style={{ position: 'relative' }}>
-                            <div className="move-info" style={{ opacity: (gameState === "playing" && !resultMsg) ? 0.3 : 1 }}>
+                        <div className="move-card right-card">
+                            <div className={`move-info ${gameState === "playing" && !resultMsg ? "move-info-hidden" : ""}`}>
                                 <div className="move-name">{rightMove.name}</div>
                                 <div className="move-type" data-type={rightMove.type}>{rightMove.type}</div>
                                 <div className={`category-${rightMove.category} move-category`}>{rightMove.category}</div>
-                                <div style={{ fontSize: '0.8rem', fontStyle: 'italic', margin: '5px 0', minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div className="move-flavor">
                                     "{rightMove.flavor}"
                                 </div>
                             </div>
@@ -326,32 +331,26 @@ export function MoveHigherLower() {
                         {gameState === "playing" && !resultMsg && (
                             <div className="controls-side">
                                 <button className="guess-btn btn-higher" onClick={() => handleGuess('higher')}>▲ Higher</button>
-                                <button className="guess-btn btn-equal" style={{ background: '#FFD700', color: '#333' }} onClick={() => handleGuess('equal')}>= Equal</button>
+                                <button className="guess-btn btn-equal" onClick={() => handleGuess('equal')}>= Equal</button>
                                 <button className="guess-btn btn-lower" onClick={() => handleGuess('lower')}>▼ Lower</button>
                             </div>
                         )}
                     </div>
 
                     {resultMsg && (
-                        <div style={{
-                            position: 'absolute',
-                            zIndex: 100,
-                            fontSize: '3rem',
-                            fontWeight: 'bold',
-                            color: resultMsg === "Correct!" ? '#4caf50' : '#ff4444',
-                            textShadow: '2px 2px 5px white',
-                            top: '40%'
-                        }}>
+                        <div className={`result-feedback ${resultMsg === "Correct!" ? "result-correct" : "result-wrong"}`}>
                             {resultMsg}
                         </div>
                     )}
 
                     {gameState === "gameover" && (
                         <div className="overlay">
-                            <h1 style={{ color: '#ff4444' }}>Game Over</h1>
+                            <h1 className="overlay-title-gameover">Game Over</h1>
                             <p>You scored {score}!</p>
-                            <p>{rightMove.name} has {getStatValue(rightMove)} {getStatLabel()}</p>
-                            <button className="start-btn" onClick={() => setGameState("setup")}>Try Again</button>
+                            <div className="overlay-details">
+                                <p className="overlay-text-small">{rightMove.name} has {getStatValue(rightMove)} {getStatLabel()}</p>
+                                <button onClick={() => setGameState("setup")}>Try Again</button>
+                            </div>
                         </div>
                     )}
                 </div>

@@ -262,6 +262,17 @@ export function PokeTrivia() {
             {gameState === "setup" && (
                 <form className="setup-form" onSubmit={startGame}>
                     <h1>PokéTrivia Challenge</h1>
+
+                    <div className="instructions-box">
+                        <h3>How to Play</h3>
+                        <p>Prove you are a master by guessing entire data flows!</p>
+                        <ol className="instructions-list">
+                            <li><strong>Name</strong>: Guess the Pokémon hidden by the silhouette.</li>
+                            <li><strong>Types</strong>: Select the correct type(s).</li>
+                            <li><strong>Ability</strong>: Identify the correct ability from the options.</li>
+                        </ol>
+                    </div>
+
                     <div className="form-group">
                         <label>Select Generation</label>
                         <select value={genUrl} onChange={e => setGenUrl(e.target.value)}>
@@ -278,7 +289,6 @@ export function PokeTrivia() {
                         </select>
                     </div>
                     <button type="submit" className="start-btn">Start Challenge</button>
-                    <p style={{ textAlign: 'center', fontSize: '0.9rem' }}>Type the Name &rarr; Types &rarr; Ability</p>
                 </form>
             )}
 
@@ -287,15 +297,14 @@ export function PokeTrivia() {
             {gameState === "playing" && currentPokemon && (
                 <div className="game-area">
                     <button
-                        className="reset-btn"
-                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                        className="reconfigure-btn"
                         onClick={() => setGameState("setup")}
                     >
                         Reconfigure
                     </button>
                     <div className="score-board">
                         <span>Score: {score}/{pokemonQueue.length + 1}</span>
-                        <span style={{ color: '#d32f2f' }}>Mistakes: {mistakes}</span>
+                        <span className="mistakes-count">Mistakes: {mistakes}</span>
                     </div>
 
                     <div className="pokemon-display">
@@ -308,19 +317,15 @@ export function PokeTrivia() {
                         {/* NAME PHASE */}
                         {phase === "name" && (
                             <div className="name-phase">
-                                <h3 style={{ marginBottom: '10px' }}>Type the name!</h3>
+                                <h3 className="phase-title">Type the name!</h3>
                                 <div className="hangman-word">
                                     {currentPokemon.name.split('').map((char, i) => (
-                                        <span key={i} className="letter-slot" style={{
-                                            borderBottom: '3px solid #333',
-                                            color: revealedIndices.has(i) ? '#000' : 'transparent',
-                                            transition: 'color 0.3s'
-                                        }}>
+                                        <span key={i} className={`letter-slot ${revealedIndices.has(i) ? 'letter-revealed' : ''}`}>
                                             {char === '-' ? '-' : (revealedIndices.has(i) ? char : "_")}
                                         </span>
                                     ))}
                                 </div>
-                                <form onSubmit={handleInputSubmit} style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                                <form onSubmit={handleInputSubmit} className="input-form">
                                     <input
                                         type="text"
                                         value={inputValue}
@@ -331,22 +336,20 @@ export function PokeTrivia() {
                                     />
                                     <button type="submit" className="check-btn">Check</button>
                                 </form>
-                                <button onClick={handleGiveUp} className="give-up-btn" style={{ marginTop: '10px' }}>Give Up (+2 Errors)</button>
+                                <button onClick={handleGiveUp} className="give-up-btn give-up-btn-small">Give Up (+2 Errors)</button>
                             </div>
                         )}
 
                         {/* TYPE PHASE */}
                         {phase === "type" && (
                             <>
-                                <h2 style={{ textTransform: 'capitalize' }}>{currentPokemon.name}</h2>
+                                <h2 className="pokemon-name-title">{currentPokemon.name}</h2>
                                 <h2>Select the correct Type(s)!</h2>
-                                <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                                <div className="types-display">
                                     {currentPokemon.types.map((t, i) => (
-                                        <span key={i} className={`type-btn`}
+                                        <span key={i} className="type-btn-static"
                                             style={{
-                                                opacity: selectedTypes.includes(t) ? 1 : 1,
-                                                background: selectedTypes.includes(t) ? undefined : '#333', // Black if not found
-                                                cursor: 'default'
+                                                background: selectedTypes.includes(t) ? undefined : '#333', /* We keep this dynamic inline because it depends on the specific matching type color which is complex to class entirely without many classes or CSS vars */
                                             }}
                                             data-type={selectedTypes.includes(t) ? t : ""}
                                         >
@@ -361,15 +364,14 @@ export function PokeTrivia() {
                                         </button>
                                     ))}
                                 </div>
-                                <button onClick={handleGiveUp} className="give-up-btn" style={{ marginTop: '20px' }}>Give Up (+2 Errors)</button>
-                                <button onClick={handleGiveUp} className="give-up-btn" style={{ marginTop: '20px' }}>Give Up (+2 Errors)</button>
+                                <button onClick={handleGiveUp} className="give-up-btn">Give Up (+2 Errors)</button>
                             </>
                         )}
 
                         {/* ABILITY PHASE */}
                         {phase === "ability" && (
                             <>
-                                <h2 style={{ textTransform: 'capitalize' }}>{currentPokemon.name}</h2>
+                                <h2 className="pokemon-name-title">{currentPokemon.name}</h2>
                                 <h2>Select the correct Ability!</h2>
                                 <div className="ability-selector">
                                     {abilityOptions.map(a => (
@@ -378,8 +380,7 @@ export function PokeTrivia() {
                                         </button>
                                     ))}
                                 </div>
-                                <button onClick={handleGiveUp} className="give-up-btn" style={{ marginTop: '20px' }}>Give Up (+2 Errors)</button>
-                                <button onClick={handleGiveUp} className="give-up-btn" style={{ marginTop: '20px' }}>Give Up (+2 Errors)</button>
+                                <button onClick={handleGiveUp} className="give-up-btn">Give Up (+2 Errors)</button>
                             </>
                         )}
 
@@ -389,7 +390,7 @@ export function PokeTrivia() {
 
             {gameState === "victory" && (
                 <div className="overlay">
-                    <h1 style={{ color: '#4caf50' }}>Victory!</h1>
+                    <h1 className="victory-title">Victory!</h1>
                     <p>You completed a set of 10 Pokémon!</p>
                     <p>Total Mistakes: {mistakes}</p>
                     <button className="start-btn" onClick={() => setGameState("setup")}>Play Again</button>
@@ -398,8 +399,8 @@ export function PokeTrivia() {
 
             {showAbilityModal && (
                 <div className="overlay">
-                    <h2 style={{ textTransform: 'capitalize' }}>{abilityInfo.name}</h2>
-                    <p style={{ margin: '20px 0', fontSize: '1.1rem' }}>{abilityInfo.desc}</p>
+                    <h2 className="pokemon-name-title">{abilityInfo.name}</h2>
+                    <p className="overlay-description">{abilityInfo.desc}</p>
                     <button className="check-btn" onClick={nextStageOrPokemon}>Continue</button>
                 </div>
             )}

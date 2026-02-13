@@ -220,6 +220,18 @@ export function PokeGuess() {
                 <form className="setup-form" onSubmit={generateBoard}>
                     <h1>PokeGuess Setup</h1>
 
+                    <div className="game-instructions" style={{ marginTop: '0', marginBottom: '20px', textAlign: 'left', background: '#f0f4f8', padding: '15px', borderRadius: '8px', borderLeft: '5px solid #3c5aa6' }}>
+                        <h3 style={{ marginTop: 0, color: '#2a407a' }}>How to Play (Multiplayer)</h3>
+                        <ol className="instructions-list">
+                            <li><strong>Generate</strong>: Pick filters and create a board.</li>
+                            <li><strong>Share</strong>: Click "Share Board" inside to get a link. Send it to a friend!</li>
+                            <li><strong>Secret Pokémon</strong>: Both players pick a secret Pokémon by clicking the Star (★) on a card.</li>
+                            <li><strong>Guessing</strong>: Take turns asking Yes/No questions (e.g., "Is it Water type?").</li>
+                            <li><strong>Eliminate</strong>: Click cards to flip them down if they don't match.</li>
+                            <li><strong>Win</strong>: The last one standing (or the correct guess) wins!</li>
+                        </ol>
+                    </div>
+
                     <div className="form-group">
                         <label>Generation</label>
                         <select value={filters.genUrl} onChange={e => setFilters({ ...filters, genUrl: e.target.value })}>
@@ -235,9 +247,8 @@ export function PokeGuess() {
                     </div>
 
                     <button type="submit" className="start-btn">Generate Board</button>
-                    <p style={{ marginTop: '15px', color: '#666', fontSize: '0.9rem' }}>
-                        Generates a random board of 10 Pokémon. You can share the link with a friend to play with the same board!
-                    </p>
+                    {/* Duplicate Button Removed */}
+
                 </form>
             )}
 
@@ -249,7 +260,7 @@ export function PokeGuess() {
                         <h1>PokeGuess</h1>
                         <div className="board-actions">
                             <button className="action-btn btn-share" onClick={copyToClipboard}>🔗 Share Board</button>
-                            <button className="action-btn" style={{ background: isShiny ? '#e91e63' : '#3f51b5' }} onClick={() => setIsShiny(!isShiny)}>
+                            <button className={`action-btn ${isShiny ? 'btn-shiny-on' : 'btn-shiny-off'}`} onClick={() => setIsShiny(!isShiny)}>
                                 {isShiny ? '✨ Shiny ON' : '✨ Shiny OFF'}
                             </button>
                             <button className="action-btn btn-reset" onClick={() => setEliminatedIds(new Set())}>↺ Reset Flips</button>
@@ -258,7 +269,7 @@ export function PokeGuess() {
                     </div>
 
                     {!myPokemonId && (
-                        <div className="instructions" style={{ background: '#e3f2fd', borderColor: '#2196f3' }}>
+                        <div className="instructions">
                             <strong>Step 1:</strong> Select YOUR Mystery Pokémon by clicking the star symbol on a card.
                         </div>
                     )}
@@ -299,20 +310,18 @@ export function PokeGuess() {
 
                     {showWinConfirm && (
                         <div className="overlay">
-                            <div className="modal-content" style={{ background: 'white', padding: '30px', borderRadius: '15px', textAlign: 'center', boxShadow: '0 5px 20px rgba(0,0,0,0.3)' }}>
+                            <div className="modal-content">
                                 <h2>All Pokémon Eliminated!</h2>
                                 <p>Did you guess the opponent's Pokémon correctly?</p>
-                                <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                                <div className="modal-buttons">
                                     <button
-                                        className="action-btn"
-                                        style={{ background: '#4caf50', fontSize: '1.2rem', padding: '10px 20px' }}
+                                        className="action-btn btn-win-yes"
                                         onClick={() => handleWinConfirm(true)}
                                     >
                                         🏆 Yes, I Won!
                                     </button>
                                     <button
-                                        className="action-btn"
-                                        style={{ background: '#f44336', fontSize: '1.2rem', padding: '10px 20px' }}
+                                        className="action-btn btn-win-no"
                                         onClick={() => handleWinConfirm(false)}
                                     >
                                         ↺ No, Reset Board
@@ -324,9 +333,9 @@ export function PokeGuess() {
 
                     {victory && (
                         <div className="overlay">
-                            <div className="modal-content" style={{ background: 'white', padding: '40px', borderRadius: '15px', textAlign: 'center', boxShadow: '0 5px 20px rgba(0,0,0,0.3)' }}>
-                                <h1 style={{ color: '#ffcb05', textShadow: '2px 2px #3b4cca', fontSize: '3rem' }}>🎉 CONGRATULATIONS! 🎉</h1>
-                                <p style={{ fontSize: '1.5rem', margin: '20px 0' }}>You are a Pokémon Master!</p>
+                            <div className="modal-content victory">
+                                <h1 className="victory-title">🎉 CONGRATULATIONS! 🎉</h1>
+                                <p className="victory-text">You are a Pokémon Master!</p>
                                 <button
                                     className="start-btn"
                                     onClick={() => { setVictory(false); setEliminatedIds(new Set()); }}
@@ -334,8 +343,7 @@ export function PokeGuess() {
                                     Play Again (Reset Flips)
                                 </button>
                                 <button
-                                    className="start-btn"
-                                    style={{ marginTop: '10px', background: '#3b4cca', color: 'white' }}
+                                    className="start-btn btn-new-game"
                                     onClick={() => setGameState("setup")}
                                 >
                                     New Game

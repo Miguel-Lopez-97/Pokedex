@@ -37,6 +37,7 @@ render(
           <Route path="/trivia" element={<TriviaGame />} />
           <Route path="/poke-trivia" element={<PokeTrivia />} />
           <Route path="/move-higher-lower" element={<MoveHigherLower />} />
+          <Route path="/higher-lower" element={<HigherLower />} />
           <Route path="/analysis" element={<TeamAnalysis />} />
           <Route path="/pokeguess" element={<PokeGuess />} />
           <Route path="/" element={<Home />} />
