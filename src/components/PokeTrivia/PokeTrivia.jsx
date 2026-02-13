@@ -286,6 +286,13 @@ export function PokeTrivia() {
 
             {gameState === "playing" && currentPokemon && (
                 <div className="game-area">
+                    <button
+                        className="reset-btn"
+                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                        onClick={() => setGameState("setup")}
+                    >
+                        Reconfigure
+                    </button>
                     <div className="score-board">
                         <span>Score: {score}/{pokemonQueue.length + 1}</span>
                         <span style={{ color: '#d32f2f' }}>Mistakes: {mistakes}</span>

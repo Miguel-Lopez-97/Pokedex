@@ -278,6 +278,13 @@ export function HigherLower() {
 
             {(gameState === "playing" || gameState === "victory" || gameState === "gameover") && leftPokemon && rightPokemon && (
                 <div className="game-area">
+                    <button
+                        className="reset-btn"
+                        style={{ alignSelf: 'flex-end', marginRight: '10%', marginBottom: '1rem', background: '#555', color: '#fff', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                        onClick={() => setGameState("setup")}
+                    >
+                        Reconfigure
+                    </button>
                     <div className="score-board">
                         <span>Score: {currentScore}</span>
                         <span>Remaining: {gameQueue.length + 1}</span>

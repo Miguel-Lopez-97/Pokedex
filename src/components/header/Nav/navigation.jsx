@@ -72,8 +72,18 @@ export function NavBar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/move-higher-lower" className="nav-link" activeClassName="active" onClick={onShow}>
+            Move Higher/Lower
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/trivia" className="nav-link" activeClassName="active" onClick={onShow}>
             Trivia Game
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/analysis" className="nav-link" activeClassName="active" onClick={onShow}>
+            Team Analysis
           </NavLink>
         </li>
         <li>

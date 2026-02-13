@@ -9,6 +9,8 @@ import { ApiType } from "./components/Api_Type/Type";
 import { TriviaGame } from "./components/Trivia/TriviaGame";
 import { HigherLower } from "./components/HigherLower/HigherLower";
 import { PokeTrivia } from "./components/PokeTrivia/PokeTrivia";
+import { MoveHigherLower } from "./components/MoveHigherLower/MoveHigherLower";
+import { TeamAnalysis } from "./components/Analysis/TeamAnalysis";
 import reportWebVitals from './reportWebVitals';
 
 const rootElement = document.getElementById("root");
@@ -33,7 +35,8 @@ render(
         <Route path='/' element={<Header />}>
           <Route path="/trivia" element={<TriviaGame />} />
           <Route path="/poke-trivia" element={<PokeTrivia />} />
-          <Route path="/higher-lower" element={<HigherLower />} />
+          <Route path="/move-higher-lower" element={<MoveHigherLower />} />
+          <Route path="/analysis" element={<TeamAnalysis />} />
           <Route path="/" element={<Home />} />
           <Route path="/first_gen" element={<ApiGen urlApi={url[0]} Gen="Kanto - First" />} />
           <Route path="/second_gen" element={<ApiGen urlApi={url[1]} Gen="Johto - Second" />} />

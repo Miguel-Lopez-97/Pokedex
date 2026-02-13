@@ -1,0 +1,169 @@
+.move-higher-lower-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    min-height: 80vh;
+}
+
+.move-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    width: 250px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 5px solid #eee;
+    transition: transform 0.3s;
+}
+
+.move-card.left-card {
+    border-color: #4caf50;
+}
+
+.move-card.right-card {
+    border-color: #2196f3;
+}
+
+.move-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.move-type {
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.move-category {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.move-stat-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Reuse game area styles from HigherLower or define here */
+.cards-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* Reduced gap to fit controls */
+    margin-top: 50px;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.vs-circle {
+    background: #333;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+
+/* New Side Controls */
+.controls-side {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 120px;
+}
+
+.guess-btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-higher {
+    background: #4caf50;
+    color: white;
+}
+
+.btn-lower {
+    background: #f44336;
+    color: white;
+}
+
+.btn-equal:hover {
+    background-color: #e6c200;
+}
+
+.guess-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Category Icons/Colors if needed */
+.category-physical {
+    background-color: #c92112;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.category-special {
+    background-color: #4f5870;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.category-status {
+    background-color: #8c888c;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.move-info {
+    width: 100%;
+}
