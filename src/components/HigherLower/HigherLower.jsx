@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { PokemonIndividual } from "../Card/card";
 import "./higherlower.css";
 
@@ -301,7 +301,7 @@ export function HigherLower() {
                     </div>
 
                     <div className="cards-container">
-                        {/* Left Card - Known */}
+                        {/* 1. CARTA IZQUIERDA (BASE) */}
                         <div className={`card-wrapper left-card`}>
                             <PokemonIndividual
                                 name={leftPokemon.name}
@@ -312,34 +312,39 @@ export function HigherLower() {
                                 type2={leftPokemon.types[1] || "null"}
                                 ability1={leftPokemon.abilities?.[0]?.ability?.name || "undefined"}
                                 ability2={leftPokemon.abilities?.[1]?.ability?.name || "null"}
+                                // ... pasa el resto de props normales
                                 hp={leftPokemon.stats.hp}
                                 attack={leftPokemon.stats.attack}
                                 defense={leftPokemon.stats.defense}
                                 specialAttack={leftPokemon.stats.special_attack}
                                 specialDefense={leftPokemon.stats.special_defense}
                                 speed={leftPokemon.stats.speed}
-                                hidden={false}
                                 customStat={{ label: getStatLabel(), value: getStatValue(leftPokemon) }}
                             />
                         </div>
 
-                        <div className="vs-circle">VS</div>
-
-                        {/* Right Card - Stats Hidden */}
-                        <div className={`card-wrapper right-card`}>
-                            {/* Controls Overlay if playing */}
+                        {/* 2. COLUMNA CENTRAL (CONTROLES) */}
+                        <div className="middle-controls">
                             {gameState === "playing" && !resultMsg && (
-                                <div className="controls">
+                                <>
                                     <button className="guess-btn btn-higher" onClick={() => handleGuess('higher')}>
                                         Higher ▲
                                     </button>
+
+                                    <div className="vs-circle">VS</div>
+
                                     <button className="guess-btn btn-lower" onClick={() => handleGuess('lower')}>
                                         Lower ▼
                                     </button>
-                                </div>
+                                </>
                             )}
+                            {/* Mantenemos el círculo VS incluso si no estamos jugando para estructura */}
+                            {(gameState !== "playing" || resultMsg) && <div className="vs-circle">VS</div>}
+                        </div>
 
-                            <div style={{ transition: 'all 0.5s' }}>
+                        {/* 3. CARTA DERECHA (OBJETIVO - Visible pero con stat oculta) */}
+                        <div className={`card-wrapper right-card`}>
+                            <div className="card-content">
                                 <PokemonIndividual
                                     name={rightPokemon.name}
                                     dex={rightPokemon.dex}
@@ -349,16 +354,14 @@ export function HigherLower() {
                                     type2={rightPokemon.types[1] || "null"}
                                     ability1={rightPokemon.abilities?.[0]?.ability?.name || "undefined"}
                                     ability2={rightPokemon.abilities?.[1]?.ability?.name || "null"}
+                                    // ... pasa el resto de props
                                     hp={rightPokemon.stats.hp}
                                     attack={rightPokemon.stats.attack}
                                     defense={rightPokemon.stats.defense}
                                     specialAttack={rightPokemon.stats.special_attack}
                                     specialDefense={rightPokemon.stats.special_defense}
                                     speed={rightPokemon.stats.speed}
-                                    hidden={false}
-                                    // Custom Stat shows '???' when playing
-                                    // Added 'glass-stat' class or inline style could be handled here or in card.jsx if supported
-                                    // For now we just use the customStat prop which card re-renders. 
+                                    // Lógica de Ocultar ???
                                     customStat={(resultMsg || gameState === 'gameover' || gameState === 'victory')
                                         ? { label: getStatLabel(), value: getStatValue(rightPokemon) }
                                         : { label: getStatLabel(), value: "???" }
@@ -387,7 +390,7 @@ export function HigherLower() {
 
                     {gameState === "victory" && (
                         <div className="overlay">
-                            <h1 style={{ color: '#4caf50' }}>Victory!</h1>
+                            <h1 className="overlay-title-victory">Victory!</h1>
                             <p>You completed the list!</p>
                             <button onClick={() => setGameState("setup")}>Play Again</button>
                         </div>

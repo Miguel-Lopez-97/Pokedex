@@ -99,7 +99,7 @@
     margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
-    background: #f0f4f8 !important;
+    background: #f0f4f8;
     padding: 15px;
     border-radius: 8px;
     border-left: 5px solid #3c5aa6;
@@ -107,7 +107,7 @@
 
 .game-instructions h3 {
     margin-top: 0;
-    color: #2a407a !important;
+    color: #2a407a;
 }
 
 .instructions-list {

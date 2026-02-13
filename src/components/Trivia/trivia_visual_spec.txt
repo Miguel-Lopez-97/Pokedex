@@ -1,0 +1,63 @@
+VISUAL SPECIFICATION: Trivia Game
+
+1. Layout:
+   - Config Form (Setup): Centered white box with filters (Gen, Type, Ranking Metric, etc.).
+   - Game Area:
+     - Header: Reconfigure button, Config Summary (small text), Lives (Hearts), Found Counter.
+     - Search Bar: Centered input "Who's that Pokémon?" with autocomplete dropdown.
+     - Grid: Fluid grid of cards.
+       - Hidden Card: Shows "???" and silhouette (if we used one, but currently logic hides image). It has a "Reveal Hint" button section.
+       - Revealed Card: Shows Image, Name, specific Stat (e.g., Speed: 100), Types, and Abilities.
+   - Victory/Game Over: Overlay with large text and "Play Again" button.
+
+2. HTML Structure (JSX Rendered Output):
+
+```jsx
+<div className="trivia-container">
+    <div className="game-area">
+        <button className="reconfigure-btn">Reconfigure</button>
+        
+        <div className="config-summary">
+            <span>Gen: Gen 1</span>
+            <span>Type: Fire</span>
+            /* ... other config spans */
+        </div>
+
+        <div className="lives-display">
+            <h2>Lives: ❤️❤️❤️❤️❤️ (5/5)</h2>
+            <h3 className="lives-subtitle">Found: 2 / 10</h3>
+        </div>
+
+        <div className="search-container">
+            <input className="search-input" placeholder="Who's that Pokémon?" />
+            {/* Suggestions Dropdown */}
+            <ul className="suggestions-list">
+                <li className="suggestion-item">Charizard</li>
+                <li className="suggestion-item">Flareon</li>
+            </ul>
+        </div>
+
+        <div className="cards-grid">
+            {/* HIDDEN CARD */}
+            <div className="card-hidden">
+                <PokemonIndividual hidden={true} name="???" ... />
+                <div className="hints-section">
+                    <div className="hint-text">💡 Type: Fire</div>
+                    <button className="hint-btn">Reveal Hint (-1 ❤️)</button>
+                </div>
+            </div>
+
+            {/* REVEALED CARD */}
+            <div>
+                <PokemonIndividual 
+                    name="Charizard" 
+                    avatarNormal="..." 
+                    customStat={{ label: "Speed", value: 100 }} 
+                    hidden={false}
+                    /* ... */ 
+                />
+            </div>
+        </div>
+    </div>
+</div>
+```

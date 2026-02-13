@@ -1,0 +1,66 @@
+VISUAL SPECIFICATION: Higher or Lower Game
+
+1. Layout:
+   - Centered container.
+   - Top: "Score" and "Remaining" counters in a dark, rounded box with gold border.
+   - Middle: Two large cards side-by-side (flex row).
+     - Left Card: Fully visible Pokémon details (Image, Name, Type, Stats). This is the "Base" card.
+     - Center: A red "VS" circle with white text, overlapping the space between cards.
+     - Right Card: Similar structure to Left Card, but the target stat is hidden (shows "???") until guessed.
+   - Overlay (Controls):
+     - When playing, a control box overlays the Right Card (or sits between them on larger screens if desired, but currently implemented as overlay/center).
+     - Buttons: "Higher" (Green) and "Lower" (Red).
+   - Bottom: Result feedback text (Correct/Wrong) appearing large and centered.
+
+2. Colors & Theme:
+   - Background: Light (white/gray).
+   - Cards: White with shadow.
+   - Buttons: Vibrant Green/Red for actions, Yellow/Blue for branding.
+   - Font: Segoe UI / Sans-serif.
+
+3. HTML Structure (JSX Rendered Output):
+
+```jsx
+<div className="higher-lower-container">
+    {/* HEADER */}
+    <div className="game-area">
+        <button className="reset-btn">Reconfigure</button>
+        <div className="score-board">
+            <span>Score: {currentScore}</span>
+            <span>Remaining: {gameQueue.length + 1}</span>
+        </div>
+
+        {/* CARDS AREA */}
+        <div className="cards-container">
+            {/* LEFT CARD (KNOWN) */}
+            <div className={`card-wrapper left-card`}>
+                <PokemonIndividual 
+                    name="Bulbasaur" 
+                    avatarNormal="..." 
+                    customStat={{ label: "Speed", value: 45 }} 
+                    /* ...other props */ 
+                />
+            </div>
+
+            <div className="vs-circle">VS</div>
+
+            {/* RIGHT CARD (UNKNOWN) */}
+            <div className={`card-wrapper right-card`}>
+                {/* CONTROLS OVERLAY */}
+                <div className="controls">
+                    <button className="guess-btn btn-higher">Higher ▲</button>
+                    <button className="guess-btn btn-lower">Lower ▼</button>
+                </div>
+
+                <div className="card-transition-wrapper">
+                    <PokemonIndividual 
+                        name="Ivysaur" 
+                        customStat={{ label: "Speed", value: "???" }} 
+                        /* ...other props */ 
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```

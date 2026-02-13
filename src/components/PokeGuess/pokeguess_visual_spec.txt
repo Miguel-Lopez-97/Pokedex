@@ -1,0 +1,62 @@
+VISUAL SPECIFICATION: PokeGuess (Guess Who)
+
+1. Layout:
+   - Filters Form (Setup): Centered, white box with dropdowns and "Generate Board" button.
+   - Game Board:
+     - Header: Title left, Actions right (Share, Shiny Toggle, Reset, Reconfigure).
+     - Instructions: Blue banner explaining "Step 1: Select" or "Step 2: Eliminate".
+     - Grid: 20 Cards arranged in a flexible grid.
+       - Card: Image, Name, Types.
+       - Star Button: Top-left of card to mark as "Mine".
+       - Status Badge: Top-right "MY POKEMON" (green) if selected.
+       - Eliminated State: Card dims (opacity 0.4) and turns grayscale.
+
+2. HTML Structure (JSX Rendered Output):
+
+```jsx
+<div className="pokeguess-container">
+    <div className="game-board">
+        <div className="board-header">
+            <h1>PokeGuess</h1>
+            <div className="board-actions">
+                <button className="action-btn btn-share">🔗 Share Board</button>
+                <button className="action-btn btn-shiny-off">✨ Shiny OFF</button>
+                <button className="action-btn btn-reset">↺ Reset Flips</button>
+                <button className="action-btn btn-exit">Reconfigure</button>
+            </div>
+        </div>
+
+        <div className="instructions">
+            <strong>Step 2:</strong> Click cards to "Flip Done" (Eliminate)...
+        </div>
+
+        <div className="cards-grid">
+            {/* ACTIVE CARD */}
+            <div className="guess-card">
+                <button className="star-btn" title="Mark as My Pokemon">★</button>
+                <img src="..." alt="Pikachu" />
+                <div className="name">Pikachu</div>
+                <div className="types">Electric</div>
+            </div>
+
+            {/* ELIMINATED CARD */}
+            <div className="guess-card eliminated">
+                <button className="star-btn">★</button>
+                <img src="..." alt="Charmander" />
+                <div className="name">Charmander</div>
+                <div className="types">Fire</div>
+            </div>
+
+            {/* MY SELECTED CARD */}
+            <div className="guess-card selected-my-pokemon">
+                <div className="status-badge badge-mine">MY POKEMON</div>
+                <button className="star-btn active">★</button>
+                <img src="..." alt="Squirtle" />
+                <div className="name">Squirtle</div>
+                <div className="types">Water</div>
+            </div>
+            {/* ... repeated for 20 cards */}
+        </div>
+    </div>
+</div>
+```

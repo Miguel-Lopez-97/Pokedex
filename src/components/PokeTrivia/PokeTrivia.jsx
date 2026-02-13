@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./poketrivia.css";
 
 const GENERATIONS = [
@@ -22,7 +22,7 @@ const TYPES = [
     "Dragon", "Dark", "Fairy"
 ];
 
-const ALPHABET = "abcdefghijklmnopqrstuvwxyz-".split("");
+
 
 const PERCENTAGES = [
     { label: "100%", value: 1.0 },
@@ -348,9 +348,6 @@ export function PokeTrivia() {
                                 <div className="types-display">
                                     {currentPokemon.types.map((t, i) => (
                                         <span key={i} className="type-btn-static"
-                                            style={{
-                                                background: selectedTypes.includes(t) ? undefined : '#333', /* We keep this dynamic inline because it depends on the specific matching type color which is complex to class entirely without many classes or CSS vars */
-                                            }}
                                             data-type={selectedTypes.includes(t) ? t : ""}
                                         >
                                             {selectedTypes.includes(t) ? t : "???"}

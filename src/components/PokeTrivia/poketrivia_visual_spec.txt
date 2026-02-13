@@ -1,0 +1,58 @@
+VISUAL SPECIFICATION: PokéTrivia Challenge
+
+1. Layout:
+   - Setup: Standard form.
+   - Game Area:
+     - Top: Reconfigure button, Score/Mistakes counter.
+     - Center Card (Focus):
+       - Large Image (Silhouette if hidden, fully visible if phases passed? Logic says it starts hidden then reveals? Actually, logic reveals name then moves to type. Image is always visible? No, "Who's that pokemon?" implies hidden or just image. Current logic shows sprite.
+       - Phase 1 (Name): Hangman-style dashes `_ _ _ _`. Input box below. "Check" button.
+       - Phase 2 (Type): "Select the correct Type(s)!". Grid of Type buttons. Correct ones stay lit/colored.
+       - Phase 3 (Ability): "Select the correct Ability!". List of ability buttons.
+       - "Give Up" button available in all phases.
+
+2. HTML Structure (JSX Rendered Output):
+
+```jsx
+<div className="poketrivia-container">
+    <div className="game-area">
+        <button className="reconfigure-btn">Reconfigure</button>
+        <div className="score-board">
+            <span>Score: 3/10</span>
+            <span className="mistakes-count">Mistakes: 1</span>
+        </div>
+
+        <div className="pokemon-display">
+            <img className="pokemon-image" src="..." alt="Who's that pokemon?" />
+
+            {/* PHASE: NAME */}
+            <div className="name-phase">
+                <h3 className="phase-title">Type the name!</h3>
+                <div className="hangman-word">
+                    <span className="letter-slot letter-revealed">P</span>
+                    <span className="letter-slot">_</span>
+                    <span className="letter-slot">_</span>
+                    <span className="letter-slot">_</span>
+                </div>
+                <form className="input-form">
+                    <input className="trivia-input" placeholder="Type Pokémon name..." />
+                    <button className="check-btn">Check</button>
+                </form>
+                <button className="give-up-btn give-up-btn-small">Give Up (+2 Errors)</button>
+            </div>
+
+            {/* PHASE: TYPE (Example) */}
+            {/* 
+            <div className="types-display">
+                <span className="type-btn-static" style={{background: '#c22e28'}}>Fighting</span>
+            </div>
+            <div className="type-selector">
+                <button className="type-btn" data-type="Normal">Normal</button>
+                <button className="type-btn" data-type="Fire">Fire</button>
+                ...
+            </div>
+            */}
+        </div>
+    </div>
+</div>
+```

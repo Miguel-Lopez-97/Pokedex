@@ -42,11 +42,48 @@ export function PokeGuess() {
 
     // Check for shared board on mount
     useEffect(() => {
+        const fetchPokemonDetails = async (idOrUrl) => {
+            // Can accept ID (int) or URL (string)
+            const url = typeof idOrUrl === 'number'
+                ? `https://pokeapi.co/api/v2/pokemon/${idOrUrl}`
+                : idOrUrl;
+
+            const res = await fetch(url);
+            const d = await res.json();
+
+            return {
+                id: d.id,
+                name: d.name,
+                types: d.types.map(t => t.type.name),
+                spriteNormal: d.sprites.other?.home?.front_default || d.sprites.front_default,
+                spriteShiny: d.sprites.other?.home?.front_shiny || d.sprites.front_shiny
+            };
+        };
+
+        const loadSharedBoard = async (idsString) => {
+            setGameState("loading");
+            setLoadingMsg("Loading Shared Board...");
+
+            try {
+                const ids = idsString.split(',').map(id => parseInt(id));
+                const pokemonData = await Promise.all(ids.map(id => fetchPokemonDetails(id)));
+
+                setBoard(pokemonData);
+                setGameState("playing");
+                setShareUrl(window.location.href);
+            } catch (e) {
+                console.error(e);
+                alert("Error loading shared board.");
+                setGameState("setup");
+            }
+        };
+
         const params = new URLSearchParams(location.search);
         const ids = params.get("ids");
         if (ids) {
             loadSharedBoard(ids);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
     // Check for win condition (all eliminated)
@@ -67,24 +104,6 @@ export function PokeGuess() {
         }
     };
 
-    const loadSharedBoard = async (idsString) => {
-        setGameState("loading");
-        setLoadingMsg("Loading Shared Board...");
-
-        try {
-            const ids = idsString.split(',').map(id => parseInt(id));
-            const pokemonData = await Promise.all(ids.map(id => fetchPokemonDetails(id)));
-
-            setBoard(pokemonData);
-            setGameState("playing");
-            setShareUrl(window.location.href);
-        } catch (e) {
-            console.error(e);
-            alert("Error loading shared board.");
-            setGameState("setup");
-        }
-    };
-
     const fetchPokemonDetails = async (idOrUrl) => {
         // Can accept ID (int) or URL (string)
         const url = typeof idOrUrl === 'number'
@@ -101,6 +120,24 @@ export function PokeGuess() {
             spriteNormal: d.sprites.other?.home?.front_default || d.sprites.front_default,
             spriteShiny: d.sprites.other?.home?.front_shiny || d.sprites.front_shiny
         };
+    };
+
+    const loadSharedBoard = async (idsString) => {
+        setGameState("loading");
+        setLoadingMsg("Loading Shared Board...");
+
+        try {
+            const ids = idsString.split(',').map(id => parseInt(id));
+            const pokemonData = await Promise.all(ids.map(id => fetchPokemonDetails(id)));
+
+            setBoard(pokemonData);
+            setGameState("playing");
+            setShareUrl(window.location.href);
+        } catch (e) {
+            console.error(e);
+            alert("Error loading shared board.");
+            setGameState("setup");
+        }
     };
 
     const generateBoard = async (e) => {
@@ -220,8 +257,8 @@ export function PokeGuess() {
                 <form className="setup-form" onSubmit={generateBoard}>
                     <h1>PokeGuess Setup</h1>
 
-                    <div className="game-instructions" style={{ marginTop: '0', marginBottom: '20px', textAlign: 'left', background: '#f0f4f8', padding: '15px', borderRadius: '8px', borderLeft: '5px solid #3c5aa6' }}>
-                        <h3 style={{ marginTop: 0, color: '#2a407a' }}>How to Play (Multiplayer)</h3>
+                    <div className="game-instructions">
+                        <h3>How to Play (Multiplayer)</h3>
                         <ol className="instructions-list">
                             <li><strong>Generate</strong>: Pick filters and create a board.</li>
                             <li><strong>Share</strong>: Click "Share Board" inside to get a link. Send it to a friend!</li>

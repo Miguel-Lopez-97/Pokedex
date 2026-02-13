@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PokemonIndividual } from "../Card/card";
-import "../header/Nav/navigation.css";
+import "../Api_Gen/apigen.css"; // Reutilizamos el CSS del componente anterior
 
 const TYPES = [
   "Any", "Bug", "Dark", "Dragon", "Electric", "Fairy", "Fighting", "Fire", "Flying",
@@ -15,55 +15,59 @@ export function ApiType(props) {
   const { urlApi, Gen } = props;
 
   const getApi = async (url) => {
-    fetch(url).then(setPokemon([]))
-      .then((res) => res.json())
-      .then((json) => {
-        json.pokemon.forEach((el) => {
-          fetch(el.pokemon.url)
-            .then((res) => res.json())
-            .then((json) => {
-              let speciesId = json.id;
-              if (json.species && json.species.url) {
-                const parts = json.species.url.split('/');
-                speciesId = parseInt(parts[parts.length - 2]);
-              }
+    setPokemon([]); // Clear current list immediately
 
-              let pokemonNew = {
-                id: json.id,
-                speciesId: speciesId,
-                dex: json.id,
-                name: json.name[0].toUpperCase() + json.name.slice(1),
-                avatarNormal: json.sprites.other.home.front_default,
-                avatarShiny: json.sprites.other.home.front_shiny,
-                type1:
-                  json.types[0].type.name[0].toUpperCase() +
-                  json.types[0].type.name.slice(1),
-                type2:
-                  json.types.length === 2
-                    ? json.types[1].type.name[0].toUpperCase() +
-                    json.types[1].type.name.slice(1)
-                    : "null",
-                ability1: json.abilities?.[0]?.ability?.name || "undefined",
-                ability2: json.abilities?.length > 1
-                  ? json.abilities[1].ability.name
-                  : "null",
-                hp: json.stats[0].base_stat,
-                attack: json.stats[1].base_stat,
-                defense: json.stats[2].base_stat,
-                specialAttack: json.stats[3].base_stat,
-                specialDefense: json.stats[4].base_stat,
-                speed: json.stats[5].base_stat
-              };
-              setPokemon(prev => [...prev, pokemonNew])
-            })
-            ;
-        });
-      });
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+
+      // Use Promise.all to fetch all details in parallel
+      const detailedPokemon = await Promise.all(
+        json.pokemon.map(async (el) => {
+          const res = await fetch(el.pokemon.url);
+          const data = await res.json();
+
+          let speciesId = data.id;
+          if (data.species && data.species.url) {
+            const parts = data.species.url.split('/');
+            // url is usually .../pokemon-species/{id}/
+            speciesId = parseInt(parts[parts.length - 2]);
+          }
+
+          return {
+            id: data.id,
+            speciesId: speciesId,
+            dex: data.id,
+            name: data.name[0].toUpperCase() + data.name.slice(1),
+            avatarNormal: data.sprites.other?.home?.front_default || data.sprites.front_default,
+            avatarShiny: data.sprites.other?.home?.front_shiny || data.sprites.front_shiny,
+            type1: data.types[0].type.name[0].toUpperCase() + data.types[0].type.name.slice(1),
+            type2: data.types.length === 2
+              ? data.types[1].type.name[0].toUpperCase() + data.types[1].type.name.slice(1)
+              : "null",
+            ability1: data.abilities?.[0]?.ability?.name || "undefined",
+            ability2: data.abilities?.length > 1
+              ? data.abilities[1].ability.name
+              : "null",
+            hp: data.stats[0].base_stat,
+            attack: data.stats[1].base_stat,
+            defense: data.stats[2].base_stat,
+            specialAttack: data.stats[3].base_stat,
+            specialDefense: data.stats[4].base_stat,
+            speed: data.stats[5].base_stat
+          };
+        })
+      );
+
+      setPokemon(detailedPokemon);
+    } catch (err) {
+      console.error("Error fetching type data:", err);
+    }
   };
-
 
   useEffect(() => {
     getApi(urlApi);
+    setFilterType2("Any");
   }, [urlApi]);
 
   const filteredPokemon = pokemon.filter(p => {
@@ -81,16 +85,21 @@ export function ApiType(props) {
   });
 
   return (
-    <>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1>{Gen} Type</h1>
-        <div className="sort-controls" style={{ marginTop: '10px', display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <div>
-            <label style={{ marginRight: '10px', color: 'white' }}>Sort By:</label>
+    <div className="api-gen-wrapper">
+
+      {/* HEADER SECTION */}
+      <header className="gen-header">
+        <h1 className="gen-title">{Gen} Type</h1>
+
+        <div className="controls-container">
+
+          {/* Sort Control */}
+          <div className="control-group">
+            <label>Sort By</label>
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
-              style={{ padding: '5px', borderRadius: '5px' }}
+              className="custom-select"
             >
               <option value="dex-asc">Pokedex Number (Asc)</option>
               <option value="dex-desc">Pokedex Number (Desc)</option>
@@ -98,26 +107,29 @@ export function ApiType(props) {
               <option value="za">Name (Z-A)</option>
             </select>
           </div>
-          <div>
-            <label style={{ marginRight: '10px', color: 'white' }}>Secondary Type:</label>
+
+          {/* Secondary Type Filter */}
+          <div className="control-group">
+            <label>Secondary Type</label>
             <select
               value={filterType2}
               onChange={(e) => setFilterType2(e.target.value)}
-              style={{ padding: '5px', borderRadius: '5px' }}
+              className="custom-select"
             >
               <option value="Any">Any</option>
               <option value="None">None (Pure)</option>
               {TYPES.filter(t => t !== "Any").map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
+
         </div>
-      </div>
-      <div className="container">
+      </header>
+
+      {/* GRID SECTION */}
+      <div className="pokemon-grid-container">
         {sortedPokemon.length === 0 ? (
-          <div className="pokemon-card" style={{ backgroundColor: '#222', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', cursor: 'default' }}>
-            <div style={{ textAlign: 'center', padding: '20px' }}>
-              <h3>No Pokémon with this type combination exists yet.</h3>
-            </div>
+          <div className="no-results-card">
+            <h3>No Pokémon with this type combination exists yet.</h3>
           </div>
         ) : (
           sortedPokemon.map((el) => (
@@ -141,6 +153,6 @@ export function ApiType(props) {
           ))
         )}
       </div>
-    </>
+    </div>
   );
 };

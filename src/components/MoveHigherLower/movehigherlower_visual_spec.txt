@@ -1,0 +1,63 @@
+VISUAL SPECIFICATION: Move Higher Lower Game
+
+1. Layout:
+   - Centered container, similar to HigherLower.
+   - Top: Score counter in a dark box.
+   - Middle: Two "Move Cards" side-by-side.
+     - Move Card: Displays Move Name (Large), Type (colored badge), Category (Physical/Special icon/text), and Flavor Text (Italic description).
+     - Bottom of Card: Stat Display (e.g., Power: 90).
+   - VS Circle: Red circle separating the two cards.
+   - Controls:
+     - Located on the side or bottom (depending on screen size), or overlay.
+     - Buttons: "Higher" (Green), "Equal" (Gray/Blue), "Lower" (Red).
+
+2. HTML Structure (JSX Rendered Output):
+
+```jsx
+<div className="move-higher-lower-container">
+    <div className="game-area">
+        <button className="reset-btn">Reconfigure</button>
+        <div className="score-board">
+            <span>Score: 5 / 10</span>
+        </div>
+
+        <div className="cards-container">
+            {/* LEFT MOVE CARD */}
+            <div className="move-card left-card">
+                <div className="move-info">
+                    <div className="move-name">Thunderbolt</div>
+                    <div className="move-type" data-type="Electric">Electric</div>
+                    <div className="category-special move-category">Special</div>
+                    <div className="move-flavor">"A strong electric blast..."</div>
+                </div>
+                <div className="move-stat-display">
+                    <div className="stat-label">Power</div>
+                    <div className="stat-value">90</div>
+                </div>
+            </div>
+
+            <div className="vs-circle">VS</div>
+
+            {/* RIGHT MOVE CARD */}
+            <div className="move-card right-card">
+                <div className="move-info move-info-hidden">
+                    {/* Info hidden/dimmed until revealed */}
+                    <div className="move-name">Flamethrower</div>
+                     {/* ... details */}
+                </div>
+                <div className="move-stat-display">
+                    <div className="stat-label">Power</div>
+                    <div className="stat-value">???</div>
+                </div>
+            </div>
+
+            {/* CONTROLS */}
+            <div className="controls-side">
+                <button className="guess-btn btn-higher">▲ Higher</button>
+                <button className="guess-btn btn-equal">= Equal</button>
+                <button className="guess-btn btn-lower">▼ Lower</button>
+            </div>
+        </div>
+    </div>
+</div>
+```

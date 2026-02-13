@@ -227,29 +227,30 @@ export function MoveHigherLower() {
 
     return (
         <div className="move-higher-lower-container">
+            {/* 1. SETUP SCREEN */}
             {gameState === "setup" && (
                 <form className="setup-form" onSubmit={startGame}>
-                    <h1>Move Higher Lower</h1>
+                    <h1>Move Battle</h1>
 
                     <div className="instructions-box">
                         <h3>How to Play</h3>
-                        <p>Guess if the <strong>Hidden Move</strong> has a Higher or Lower Power/Accuracy/PP.</p>
+                        <p>Guess if the <strong>Hidden Move</strong> has a Higher or Lower stat.</p>
                         <ul className="instructions-list">
                             <li><strong>Power</strong>: Damage potential.</li>
-                            <li><strong>Accuracy</strong>: Hit chance.</li>
+                            <li><strong>Accuracy</strong>: Hit chance (%)</li>
                             <li><strong>PP</strong>: Usage count.</li>
                         </ul>
                     </div>
 
                     <div className="form-group">
-                        <label>Type</label>
+                        <label>Type Filter</label>
                         <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })}>
                             {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                         </select>
                     </div>
 
                     <div className="form-group">
-                        <label>Category</label>
+                        <label>Category Filter</label>
                         <select value={filters.category} onChange={e => setFilters({ ...filters, category: e.target.value })}>
                             {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
@@ -263,41 +264,37 @@ export function MoveHigherLower() {
                     </div>
 
                     <div className="form-group">
-                        <label>Game Length (% of Pool)</label>
+                        <label>Game Length</label>
                         <select value={filters.percentage} onChange={e => setFilters({ ...filters, percentage: parseFloat(e.target.value) })}>
                             {PERCENTAGES.map(p => <option key={p.label} value={p.value}>{p.label}</option>)}
                         </select>
                     </div>
 
-                    <button type="submit" className="start-btn">Start Game</button>
-                    {/* Duplicate Instructions removed */}
+                    <button type="submit" className="start-btn">Start Battle</button>
                 </form>
             )}
 
-            {gameState === "loading" && <h1>{loadingMsg}</h1>}
+            {/* 2. LOADING SCREEN */}
+            {gameState === "loading" && <h1 style={{marginTop: "20vh"}}>{loadingMsg}</h1>}
 
+            {/* 3. GAMEPLAY SCREEN */}
             {(gameState === "playing" || gameState === "gameover" || gameState === "victory") && leftMove && rightMove && (
                 <div className="game-area">
-                    <button
-                        className="reset-btn"
-                        onClick={() => setGameState("setup")}
-                    >
-                        Reconfigure
-                    </button>
+                    {/* Header: Score & Reset */}
                     <div className="score-board">
                         <span>Score: {score} / {totalMoves}</span>
                     </div>
 
                     <div className="cards-container">
-                        {/* LEFT CARD */}
+                        {/* LEFT CARD (KNOWN) */}
                         <div className="move-card left-card">
                             <div className="move-info">
                                 <div className="move-name">{leftMove.name}</div>
-                                <div className="move-type" data-type={leftMove.type}>{leftMove.type}</div>
-                                <div className={`category-${leftMove.category} move-category`}>{leftMove.category}</div>
-                                <div className="move-flavor">
-                                    "{leftMove.flavor}"
+                                <div className="badges-row">
+                                    <span className="badge move-type">{leftMove.type}</span>
+                                    <span className={`badge category-${leftMove.category}`}>{leftMove.category}</span>
                                 </div>
+                                <div className="move-flavor">"{leftMove.flavor}"</div>
                             </div>
 
                             <div className="move-stat-display">
@@ -306,51 +303,76 @@ export function MoveHigherLower() {
                             </div>
                         </div>
 
-                        <div className="vs-circle">VS</div>
+                        {/* MIDDLE CONTROLS */}
+                        <div className="middle-controls">
+                            {gameState === "playing" && !resultMsg ? (
+                                <>
+                                    <button className="guess-btn btn-higher" onClick={() => handleGuess('higher')}>▲ Higher</button>
+                                    <button className="guess-btn btn-equal" onClick={() => handleGuess('equal')}>= Equal</button>
+                                    <button className="guess-btn btn-lower" onClick={() => handleGuess('lower')}>▼ Lower</button>
+                                </>
+                            ) : (
+                                <div className="vs-circle">VS</div>
+                            )}
+                        </div>
 
-                        {/* RIGHT CARD */}
+                        {/* RIGHT CARD (UNKNOWN VALUE) */}
                         <div className="move-card right-card">
-                            <div className={`move-info ${gameState === "playing" && !resultMsg ? "move-info-hidden" : ""}`}>
+                            <div className="move-info">
+                                {/* INFO IS VISIBLE, ONLY STAT IS HIDDEN */}
                                 <div className="move-name">{rightMove.name}</div>
-                                <div className="move-type" data-type={rightMove.type}>{rightMove.type}</div>
-                                <div className={`category-${rightMove.category} move-category`}>{rightMove.category}</div>
-                                <div className="move-flavor">
-                                    "{rightMove.flavor}"
+                                <div className="badges-row">
+                                    <span className="badge move-type">{rightMove.type}</span>
+                                    <span className={`badge category-${rightMove.category}`}>{rightMove.category}</span>
                                 </div>
+                                <div className="move-flavor">"{rightMove.flavor}"</div>
                             </div>
 
                             <div className="move-stat-display">
                                 <div className="stat-label">{getStatLabel()}</div>
                                 <div className="stat-value">
+                                    {/* Reveal on Result or Game Over */}
                                     {(resultMsg || gameState !== "playing") ? getStatValue(rightMove) : "???"}
                                 </div>
                             </div>
                         </div>
-
-                        {/* CONTROLS (Side) */}
-                        {gameState === "playing" && !resultMsg && (
-                            <div className="controls-side">
-                                <button className="guess-btn btn-higher" onClick={() => handleGuess('higher')}>▲ Higher</button>
-                                <button className="guess-btn btn-equal" onClick={() => handleGuess('equal')}>= Equal</button>
-                                <button className="guess-btn btn-lower" onClick={() => handleGuess('lower')}>▼ Lower</button>
-                            </div>
-                        )}
                     </div>
 
+                    {/* Result Feedback (e.g. "CORRECT!") */}
                     {resultMsg && (
-                        <div className={`result-feedback ${resultMsg === "Correct!" ? "result-correct" : "result-wrong"}`}>
+                        <h2 style={{
+                            color: resultMsg === "Correct!" ? "var(--pk-green)" : "var(--pk-red)", 
+                            fontSize: "3rem", 
+                            fontWeight: "900",
+                            textShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                            marginTop: "1rem"
+                        }}>
                             {resultMsg}
-                        </div>
+                        </h2>
                     )}
+                    
+                    {/* Botón Reset fuera del flujo principal de juego para no distraer */}
+                    <button className="reset-btn" onClick={() => setGameState("setup")} style={{marginTop: "2rem"}}>
+                        Reconfigure Game
+                    </button>
 
+                    {/* OVERLAYS */}
                     {gameState === "gameover" && (
                         <div className="overlay">
                             <h1 className="overlay-title-gameover">Game Over</h1>
-                            <p>You scored {score}!</p>
-                            <div className="overlay-details">
-                                <p className="overlay-text-small">{rightMove.name} has {getStatValue(rightMove)} {getStatLabel()}</p>
-                                <button onClick={() => setGameState("setup")}>Try Again</button>
-                            </div>
+                            <p>Final Score: {score}</p>
+                            <p className="overlay-text-small" style={{color: "#ccc"}}>
+                                <strong>{rightMove.name}</strong> had <strong>{getStatValue(rightMove)}</strong> {getStatLabel()}
+                            </p>
+                            <button onClick={() => setGameState("setup")}>Try Again</button>
+                        </div>
+                    )}
+                    
+                    {gameState === "victory" && (
+                        <div className="overlay">
+                            <h1 style={{color: "var(--pk-green)"}}>Victory!</h1>
+                            <p>You guessed all moves correctly!</p>
+                            <button onClick={() => setGameState("setup")}>Play Again</button>
                         </div>
                     )}
                 </div>

@@ -302,77 +302,95 @@
 }
 
 /* Pokemon Type Colors matching Card component roughly */
-.type-btn[data-type="Normal"] {
+.type-btn[data-type="Normal"],
+.type-btn-static[data-type="Normal"] {
     background: #a8a77a;
 }
 
-.type-btn[data-type="Fighting"] {
+.type-btn[data-type="Fighting"],
+.type-btn-static[data-type="Fighting"] {
     background: #c22e28;
 }
 
-.type-btn[data-type="Flying"] {
+.type-btn[data-type="Flying"],
+.type-btn-static[data-type="Flying"] {
     background: #a98ff3;
 }
 
-.type-btn[data-type="Poison"] {
+.type-btn[data-type="Poison"],
+.type-btn-static[data-type="Poison"] {
     background: #a33ea1;
 }
 
-.type-btn[data-type="Ground"] {
+.type-btn[data-type="Ground"],
+.type-btn-static[data-type="Ground"] {
     background: #e2bf65;
 }
 
-.type-btn[data-type="Rock"] {
+.type-btn[data-type="Rock"],
+.type-btn-static[data-type="Rock"] {
     background: #b6a136;
 }
 
-.type-btn[data-type="Bug"] {
+.type-btn[data-type="Bug"],
+.type-btn-static[data-type="Bug"] {
     background: #a6b91a;
 }
 
-.type-btn[data-type="Ghost"] {
+.type-btn[data-type="Ghost"],
+.type-btn-static[data-type="Ghost"] {
     background: #735797;
 }
 
-.type-btn[data-type="Steel"] {
+.type-btn[data-type="Steel"],
+.type-btn-static[data-type="Steel"] {
     background: #b7b7ce;
 }
 
-.type-btn[data-type="Fire"] {
+.type-btn[data-type="Fire"],
+.type-btn-static[data-type="Fire"] {
     background: #ee8130;
 }
 
-.type-btn[data-type="Water"] {
+.type-btn[data-type="Water"],
+.type-btn-static[data-type="Water"] {
     background: #6390f0;
 }
 
-.type-btn[data-type="Grass"] {
+.type-btn[data-type="Grass"],
+.type-btn-static[data-type="Grass"] {
     background: #7ac74c;
 }
 
-.type-btn[data-type="Electric"] {
+.type-btn[data-type="Electric"],
+.type-btn-static[data-type="Electric"] {
     background: #f7d02c;
     color: #333;
 }
 
-.type-btn[data-type="Psychic"] {
+.type-btn[data-type="Psychic"],
+.type-btn-static[data-type="Psychic"] {
     background: #f95587;
 }
 
-.type-btn[data-type="Ice"] {
+.type-btn[data-type="Ice"],
+.type-btn-static[data-type="Ice"] {
     background: #96d9d6;
     color: #333;
 }
 
-.type-btn[data-type="Dragon"] {
+.type-btn[data-type="Dragon"],
+.type-btn-static[data-type="Dragon"] {
     background: #6f35fc;
 }
 
-.type-btn[data-type="Dark"] {
+.type-btn[data-type="Dark"],
+.type-btn-static[data-type="Dark"] {
     background: #705746;
 }
 
-.type-btn[data-type="Fairy"] {
+.type-btn[data-type="Fairy"],
+.type-btn-static[data-type="Fairy"] {
     background: #d685ad;
 }
 
