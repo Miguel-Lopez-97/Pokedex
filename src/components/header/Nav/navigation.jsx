@@ -96,6 +96,11 @@ export function NavBar() {
             Higher or Lower
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/pokeguess" className="nav-link" activeClassName="active" onClick={onShow}>
+            PokeGuess (Guess Who)
+          </NavLink>
+        </li>
       </ul>
     </>
   );

@@ -11,6 +11,7 @@ import { HigherLower } from "./components/HigherLower/HigherLower";
 import { PokeTrivia } from "./components/PokeTrivia/PokeTrivia";
 import { MoveHigherLower } from "./components/MoveHigherLower/MoveHigherLower";
 import { TeamAnalysis } from "./components/Analysis/TeamAnalysis";
+import { PokeGuess } from './components/PokeGuess/PokeGuess';
 import reportWebVitals from './reportWebVitals';
 
 const rootElement = document.getElementById("root");
@@ -37,6 +38,7 @@ render(
           <Route path="/poke-trivia" element={<PokeTrivia />} />
           <Route path="/move-higher-lower" element={<MoveHigherLower />} />
           <Route path="/analysis" element={<TeamAnalysis />} />
+          <Route path="/pokeguess" element={<PokeGuess />} />
           <Route path="/" element={<Home />} />
           <Route path="/first_gen" element={<ApiGen urlApi={url[0]} Gen="Kanto - First" />} />
           <Route path="/second_gen" element={<ApiGen urlApi={url[1]} Gen="Johto - Second" />} />

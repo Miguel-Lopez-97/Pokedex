@@ -1,0 +1,258 @@
+.pokeguess-container {
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.setup-form {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.setup-form h1 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.start-btn {
+    width: 100%;
+    padding: 12px;
+    background: #ffcb05;
+    /* Pokemon Yellow */
+    border: none;
+    border-radius: 5px;
+    color: #3b4cca;
+    /* Pokemon Blue */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.start-btn:hover {
+    background: #fae017;
+}
+
+.game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.board-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-share {
+    background-color: #2196f3;
+}
+
+.btn-reset {
+    background-color: #ff9800;
+}
+
+.btn-exit {
+    background-color: #f44336;
+}
+
+.cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.guess-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    border: 3px solid transparent;
+    width: 180px;
+    /* Fixed width for flexbox */
+    margin: 10px;
+}
+
+.guess-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.guess-card.eliminated {
+    opacity: 0.4;
+    transform: scale(0.95);
+    filter: grayscale(100%);
+}
+
+.guess-card.selected-my-pokemon {
+    border-color: #4caf50;
+    /* Green border for "My Pokemon" */
+    background-color: #e8f5e9;
+}
+
+.guess-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.guess-card .name {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin: 5px 0;
+}
+
+.guess-card .types {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Status overlays */
+.status-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-mine {
+    background-color: #4caf50;
+}
+
+.star-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    color: #ffd700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.star-btn:hover {
+    transform: scale(1.1);
+    background: white;
+    border-color: #ffd700;
+}
+
+.star-btn.active {
+    background: #ffd700;
+    color: white;
+    border-color: #e6c200;
+}
+
+.instructions {
+    margin-top: 30px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    margin: 0;
+    padding: 0;
+    transform: revert-layer;
+}
+
+.modal-content {
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
